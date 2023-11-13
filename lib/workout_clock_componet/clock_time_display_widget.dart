@@ -9,7 +9,7 @@ class ClockTimeDisplay extends StatelessWidget {
     return BlocBuilder<TimerBloc,TimerState>(
         builder: (context,state){
           if(state.status ==  ClockStatus.initial){
-            return const Text('0:00', style: TextStyle(fontSize: 40, color: Colors.blueAccent),);
+            return const Text('0:00', style: TextStyle(fontSize: 40, color: Colors.white),);
           }
           if(state.status == ClockStatus.running){
             int duration  = BlocProvider.of<TimerBloc>(context).state.duration;

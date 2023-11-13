@@ -18,15 +18,7 @@ class ClockActions extends StatelessWidget {
     double remainingTime = context.select((TimerBloc bloc) => bloc.state.restTime.toDouble());
     int _breakTime  = context.select((TimerBloc bloc) => bloc.restTime);
 
-    void values(){
 
-      print('total-time: $totalTime');
-      print('remaining Time: $remainingTime');
-      print('actualBreakTime: $actualBreakTime');
-    }
-
-
-    //int initialAddTime = context.select((TimerBloc bloc) => bloc.state.breakTime);
 
     return BlocBuilder<TimerBloc, TimerState>(
         //buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,

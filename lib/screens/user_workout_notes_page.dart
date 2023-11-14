@@ -11,6 +11,7 @@ import '../workout_notes/edit_user_notes.dart';
 
 
 bool small = true;
+
 class UserWorkoutNotesPage extends StatefulWidget {
   const UserWorkoutNotesPage({super.key});
 
@@ -64,16 +65,15 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                   /// For this project: Every time our userDataBox or Workout notes changes
                   /// A listView will update with its changes
 
+                  // use Provider
                     valueListenable: Hive.box<UserWorkoutNotes>('userDataBox')
                         .listenable(),
                     builder: (context, Box<UserWorkoutNotes> userWorkoutNotes,
                         _) {
 
-                      /// Returns a list of Notes & with the VLB the List will update when Box<UserWorkoutNotes> changes
-                      /// // ToDo: Create a function in service dirctory that returns a list
                       List<UserWorkoutNotes> allWorkoutNotes = userWorkoutNotes
                           .values.toList();
-                      //bool small = true;
+
                       return GestureDetector(
                         onDoubleTap: (){
                           setState(() {
@@ -83,7 +83,6 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                         child: ListView.separated(
                             separatorBuilder: (context, index) =>
                             const SizedBox(height: 20,),
-                            // ToDo: Use a service method instead
                             itemCount: userWorkoutNotes.length,
                             itemBuilder: (context, index) {
                               UserWorkoutNotes workoutNote = allWorkoutNotes[(userWorkoutNotes

@@ -17,9 +17,9 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
 
     return Container(
       //color: Colors.black,
-      height: MediaQuery.of(context).size.height * 0.50,
+      height: MediaQuery.of(context).size.height * 0.47,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(50)),
+          borderRadius: BorderRadius.vertical(top:Radius.circular(50)),
           border: Border.all(color: Colors.blueAccent, width: 3, style: BorderStyle.solid),
           color: Colors.black
       ),
@@ -40,7 +40,7 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child : Container(
-              height: MediaQuery.of(context).size.height * 0.33,
+              height: MediaQuery.of(context).size.height * 0.30,
               child: TextField(
                 autofocus: true,
                 decoration: const InputDecoration(
@@ -64,7 +64,6 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
           ),
           TextButton(
             onPressed: ()  {
-
 
               BlocProvider.of<UserNotesBloc>(context).add(EditWorkoutNote(userWorkoutNotes:
               UserWorkoutNotes(

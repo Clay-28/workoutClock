@@ -84,7 +84,7 @@ class SlideToFinish extends StatelessWidget {
 
               BlocProvider.of<NoteBloc>(context).userData.addWorkoutNote(notes, workoutTime);
 
-              BlocProvider.of<NoteBloc>(context).userData.closeHive();
+              //BlocProvider.of<NoteBloc>(context).userData.closeHive();
 
               BlocProvider.of<TimerBloc>(context).add(const TimerReset());
               await Future.delayed(

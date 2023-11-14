@@ -104,6 +104,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit){
+    totalRestingTime = restTime.toDouble();
     _breakSubscription?.cancel();
     _tickerSubscription = _ticker.tick(seconds: event.duration)
         .listen((event) => add(_TimerTicked(duration: event)));

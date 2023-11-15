@@ -74,8 +74,6 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
                   month: workoutNote.month,
                   workoutTime: workoutNote.workoutTime),
                   index: index));
-              print(controller.text);
-              print(index);
               Navigator.pop(context);
               //BlocProvider.of<UserNotesBloc>(context).add(EditWorkoutNote(notes: controller.text, index: index));
 

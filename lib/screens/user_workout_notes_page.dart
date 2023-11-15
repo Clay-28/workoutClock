@@ -1,3 +1,4 @@
+import 'package:WorkoutClock/services/workout_note_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -22,6 +23,7 @@ class UserWorkoutNotesPage extends StatefulWidget {
 class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
   @override
   Widget build(BuildContext context) {
+
 
     return MultiBlocProvider(
         providers: [
@@ -71,8 +73,8 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                     builder: (context, Box<UserWorkoutNotes> userWorkoutNotes,
                         _) {
 
-                      List<UserWorkoutNotes> allWorkoutNotes = userWorkoutNotes
-                          .values.toList();
+                      List<UserWorkoutNotes> allWorkoutNotes = userWorkoutNotes.values.toList();
+                      //Future<List<UserWorkoutNotes>> allWorkoutNotes = WorkoutNotesServices().init().then((value) => WorkoutNotesServices().fetchWorkoutNotes());
 
                       return GestureDetector(
                         onDoubleTap: (){

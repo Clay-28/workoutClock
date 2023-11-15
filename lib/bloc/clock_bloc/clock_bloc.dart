@@ -20,6 +20,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   AudioPlayer audioPlayer = AudioPlayer();
 
 
+
   StreamSubscription<int>? _tickerSubscription;
   StreamSubscription<int>? _breakSubscription;
   StreamSubscription<int>? _addBreakSubscription;
@@ -27,7 +28,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   TimerBloc({required Ticker ticker}):
         _ticker = ticker,
         super(const TimerState(
-          duration: 0,
+          duration: 8190,
           restTime: 89,
           status: ClockStatus.initial)){
     on<TimerStarted>(_onStarted);
@@ -72,6 +73,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
       _breakSubscription?.cancel();
       _breakSubscription = _ticker.breaktick(seconds: event.restingTime).listen((event) => add(BreakCountDown(restTime: event)));
     }else {
+       audioPlayer = AudioPlayer();
        int test = event.restingTime;
        print('test:$test');
       _tickerSubscription?.pause();
@@ -89,27 +91,27 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
       print('State.breakTime: ${state.restTime}');
       emit(state.copyWith(restTime: event.restTime, status: ClockStatus.resting));
     }
-    if(state.restTime.round() == 4){
+    if(state.restTime.round() == 5){
       audioPlayer.play(AssetSource('countdown.mp3'));
-
     }
     if(event.restTime < 1){
-      audioPlayer = AudioPlayer();
+      //audioPlayer = AudioPlayer();
       _breakSubscription?.cancel();
       totalRestingTime = restTime.toDouble();
       emit(state.copyWith(duration: state.duration, restTime: restTime, status: ClockStatus.running));
+      Future.delayed(Duration(seconds: 1), (){audioPlayer.stop();});
       _tickerSubscription?.resume();
     }
   }
 
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit){
+    audioPlayer.stop();
     totalRestingTime = restTime.toDouble();
     _breakSubscription?.cancel();
     _tickerSubscription = _ticker.tick(seconds: event.duration)
         .listen((event) => add(_TimerTicked(duration: event)));
     emit(state.copyWith(status: ClockStatus.running, duration: event.duration, restTime: restTime));
-
   }
 
   void _onPaused( TimerPaused event, Emitter<TimerState>  emit){

@@ -65,7 +65,7 @@ class SlideToFinish extends StatelessWidget {
 
               int workoutTime  = BlocProvider.of<TimerBloc>(context).state.duration!;
               int workoutHours = workoutTime ~/ 3600;
-              int workoutMinutes = workoutTime ~/60;
+              int workoutMinutes = (workoutTime ~/60) % 60;
 
               String calculateWorkoutMinutes(int minutes){
                 if(minutes < 1){

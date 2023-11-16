@@ -83,13 +83,10 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   void _onBreakStarted( BreakStared event, Emitter<TimerState> emit) async{
     if(state.status  == ClockStatus.resting){
       MyAudioHandler().stop();
-      // audioPlayer.stop();
-       //audioPlayer = AudioPlayer();
-       totalRestingTime = event.totalRestingTime.toDouble();
+      totalRestingTime = event.totalRestingTime.toDouble();
       _breakSubscription?.cancel();
       _breakSubscription = _ticker.breaktick(seconds: event.restingTime).listen((event) => add(BreakCountDown(restTime: event)));
     }else {
-       //audioPlayer = AudioPlayer();
        int test = event.restingTime;
        print('test:$test');
       _tickerSubscription?.pause();
@@ -121,10 +118,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
     }
     if(event.restTime < 1){
       MyAudioHandler().stop();
-      //MyAudioHandler().initAudioService();
-      //audioPlayer = AudioPlayer();
-      //MyAudioHandler().initAudioService('no ducking');
-      //MyAudioHandler().stopp();
       _breakSubscription?.cancel();
       totalRestingTime = restTime.toDouble();
       emit(state.copyWith(duration: state.duration, restTime: restTime, status: ClockStatus.running));
@@ -135,8 +128,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit){
-    //audioPlayer.stop();
-    //createMusic().stopp();
     MyAudioHandler().stop();
     totalRestingTime = restTime.toDouble();
     _breakSubscription?.cancel();

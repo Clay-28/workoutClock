@@ -74,7 +74,8 @@ class MyAudioHandler extends BaseAudioHandler
 
   @override
   Future<void> stop() async {
-    player.stop();
+    //player.stop();
+    player;
   }
 
   @override

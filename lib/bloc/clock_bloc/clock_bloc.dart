@@ -43,7 +43,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   TimerBloc({required Ticker ticker}):
         _ticker = ticker,
         super(const TimerState(
-          duration: 8190,
+          duration: 0,
           restTime: 89,
           status: ClockStatus.initial)){
     on<TimerStarted>(_onStarted);

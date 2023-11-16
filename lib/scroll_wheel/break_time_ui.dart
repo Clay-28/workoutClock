@@ -55,8 +55,7 @@ class BreakTimeSelector extends StatelessWidget {
                         TextButton(
                             onPressed: (){
                               int breakMinutes = ScrollWheel.breakMinuets;
-                              int breakSeconds = ScrollWheel.breakSeconds; //Random().nextInt(59);
-
+                              int breakSeconds = ScrollWheel.breakSeconds;
                               if(breakMinutes + breakSeconds == 0){
                                 breakMinutes = 0;
                                 breakSeconds = 15;

@@ -26,6 +26,7 @@ class WorkoutApp extends StatelessWidget {
         RepositoryProvider(create: (context)=> WorkoutNotesServices())
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
           '/': (context) => HomePage(),

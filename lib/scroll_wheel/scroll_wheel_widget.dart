@@ -1,17 +1,16 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'scroll_wheel_minutes.dart';
 import 'scroll_wheel_seconds.dart';
 
 class ScrollWheel extends StatelessWidget {
   const ScrollWheel({super.key});
+  
 
   static int breakMinuets = 0;
   static int breakSeconds = 0;
-  //static ScrollController test = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,6 @@ class ScrollWheel extends StatelessWidget {
                 diameterRatio: 1.5,
                 onSelectedItemChanged: (value){
                   breakMinuets = value;
-                  print('Scroll Break Min: $breakMinuets');
                 },
                 childDelegate: ListWheelChildBuilderDelegate(
                   childCount: 11,
@@ -69,7 +67,7 @@ class ScrollWheel extends StatelessWidget {
                 diameterRatio: 1.5,
                 onSelectedItemChanged: (value){
                   breakSeconds = value;
-                  print('Scroll Break Seconds: $breakSeconds');
+                  //Provider<>
                 },
                 childDelegate: ListWheelChildBuilderDelegate(
                     childCount: 60,

@@ -87,8 +87,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
       _breakSubscription?.cancel();
       _breakSubscription = _ticker.breaktick(seconds: event.restingTime).listen((event) => add(BreakCountDown(restTime: event)));
     }else {
-       int test = event.restingTime;
-       print('test:$test');
       _tickerSubscription?.pause();
       _breakSubscription?.cancel();
       _breakSubscription = _ticker.breaktick(seconds: event.restingTime).listen((event) =>
@@ -101,27 +99,16 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   void _onBreakCountDown(BreakCountDown event, Emitter<TimerState> emit) async {
 
     if(event.restTime.round() >= 1){
-      print('State.breakTime: ${state.restTime}');
       emit(state.copyWith(restTime: event.restTime, status: ClockStatus.resting));
     }
     if(state.restTime.round() == 5){
-      //audioPlayer.setAudioSource(AudioSource.asset('countdown.mp3'));
-      //audioPlayer.play(AssetSource('countdown.mp3'));
-      //audioHandler.play();
-      //BaseAudioHandler().play();
-      //audioPlayer.play();
-      //audioHandler.seek(Duration(seconds: 0));
-      //audioHandler.play();
       MyAudioHandler().play();
-      //createMusic().play();
-
     }
     if(event.restTime < 1){
       MyAudioHandler().stop();
       _breakSubscription?.cancel();
       totalRestingTime = restTime.toDouble();
       emit(state.copyWith(duration: state.duration, restTime: restTime, status: ClockStatus.running));
-      //Future.delayed(Duration(seconds: 1), (){audioPlayer.stop();});
       _tickerSubscription?.resume();
     }
   }

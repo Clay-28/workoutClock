@@ -48,10 +48,14 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.1.1
   flutter_slidable: ^3.0.0
-  audioplayers: ^5.2.0
   collection:
   file_picker:
   provider:
+  just_audio_background: ^0.0.1-beta.11
+  audio_service: ^0.18.12
+  just_audio: ^0.9.36
+  audioplayers: ^5.2.1
+  audio_session: ^0.1.17
 
 dev_dependencies:
   audioplayers_platform_interface: ^6.1.0

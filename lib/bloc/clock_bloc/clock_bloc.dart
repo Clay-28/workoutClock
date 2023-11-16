@@ -1,23 +1,38 @@
 import 'dart:async';
+import 'package:WorkoutClock/audio/audio_handler.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../items/ticks.dart';
-
 
 part 'bloc_state.dart';
 part 'bloc_event.dart';
 
 
+
+
 class TimerBloc extends Bloc<TimerEvent, TimerState>{
+
+
+  MyAudioHandler createMusic(){
+    return MyAudioHandler();
+  }
 
 
   int restTime = 89;
   double totalRestingTime = 89;
   int addRestingTime = 16;
   final Ticker _ticker;
-  AudioPlayer audioPlayer = AudioPlayer();
+
+  //late AudioHandler audioHandler;
+  //AudioPlayer audioPlayer = AudioPlayer();
+  // AudioSource countdown = AudioSource.uri(Uri.parse('assets:///assets/countdown.mp3'),
+  //   tag: const MediaItem(
+  //       id: "0",
+  //       title: "countdown")
+  // );
+
+  //player.setAudioSource(AudioSource.asset('assets/countdown.mp3'));
 
 
 
@@ -67,13 +82,14 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
   void _onBreakStarted( BreakStared event, Emitter<TimerState> emit) async{
     if(state.status  == ClockStatus.resting){
-       audioPlayer.stop();
-       audioPlayer = AudioPlayer();
+      MyAudioHandler().stop();
+      // audioPlayer.stop();
+       //audioPlayer = AudioPlayer();
        totalRestingTime = event.totalRestingTime.toDouble();
       _breakSubscription?.cancel();
       _breakSubscription = _ticker.breaktick(seconds: event.restingTime).listen((event) => add(BreakCountDown(restTime: event)));
     }else {
-       audioPlayer = AudioPlayer();
+       //audioPlayer = AudioPlayer();
        int test = event.restingTime;
        print('test:$test');
       _tickerSubscription?.pause();
@@ -92,21 +108,36 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
       emit(state.copyWith(restTime: event.restTime, status: ClockStatus.resting));
     }
     if(state.restTime.round() == 5){
-      audioPlayer.play(AssetSource('countdown.mp3'));
+      //audioPlayer.setAudioSource(AudioSource.asset('countdown.mp3'));
+      //audioPlayer.play(AssetSource('countdown.mp3'));
+      //audioHandler.play();
+      //BaseAudioHandler().play();
+      //audioPlayer.play();
+      //audioHandler.seek(Duration(seconds: 0));
+      //audioHandler.play();
+      MyAudioHandler().play();
+      //createMusic().play();
+
     }
     if(event.restTime < 1){
+      MyAudioHandler().stop();
+      //MyAudioHandler().initAudioService();
       //audioPlayer = AudioPlayer();
+      //MyAudioHandler().initAudioService('no ducking');
+      //MyAudioHandler().stopp();
       _breakSubscription?.cancel();
       totalRestingTime = restTime.toDouble();
       emit(state.copyWith(duration: state.duration, restTime: restTime, status: ClockStatus.running));
-      Future.delayed(Duration(seconds: 1), (){audioPlayer.stop();});
+      //Future.delayed(Duration(seconds: 1), (){audioPlayer.stop();});
       _tickerSubscription?.resume();
     }
   }
 
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit){
-    audioPlayer.stop();
+    //audioPlayer.stop();
+    //createMusic().stopp();
+    MyAudioHandler().stop();
     totalRestingTime = restTime.toDouble();
     _breakSubscription?.cancel();
     _tickerSubscription = _ticker.tick(seconds: event.duration)

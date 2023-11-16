@@ -21,12 +21,6 @@ class UserNotesBloc extends Bloc<UserNotesEvent,UserNoteState>{
     on<LoadingUserData>(_onLoadingUserData);
   }
 
-  //Box data = WorkoutNotesData;
-  /// Open Bottom Sheet
-  /// Using text editor change text
-  /// on update
-  /// update state with new list builder and updated values
-
 
   void _onEditWorkoutNote(EditWorkoutNote event, Emitter<UserNoteState> emit) {
 

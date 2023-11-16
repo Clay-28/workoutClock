@@ -53,7 +53,7 @@ class ClockActions extends StatelessWidget {
                             null;
                           },
                           child: const Center(child: Text(
-                            'break', style: TextStyle(color: Colors.white),)),
+                            'Rest', style: TextStyle(color: Colors.white),)),
                         ),
                       ]),
                       Stack(
@@ -138,7 +138,7 @@ class ClockActions extends StatelessWidget {
                             context.read<TimerBloc>().add(BreakStared(restingTime: _breakTime,totalRestingTime: remainingTime.toInt()));
                           },
                           child: const Center(child: Text(
-                            'break', style: TextStyle(color: Colors.white),)),
+                            'Rest', style: TextStyle(color: Colors.white),)),
                         ),
                       ]),
                       Stack(
@@ -190,7 +190,7 @@ class ClockActions extends StatelessWidget {
                             //context.read<TimerBloc>().add(BreakStared(breakTime: 5));
                           },
                           child: const Center(child: Text(
-                            'break', style: TextStyle(color: Colors.white),)),
+                            'Rest', style: TextStyle(color: Colors.white),)),
                         ),
                       ]),
                       Stack(
@@ -243,7 +243,7 @@ class ClockActions extends StatelessWidget {
 
                         },
                         child: const Center(child: Text(
-                          'break\n + 15', style: TextStyle(color: Colors.white),)),
+                          'Rest\n + 15', style: TextStyle(color: Colors.white),)),
                       ),
                     ]),
                     Stack(

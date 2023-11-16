@@ -24,17 +24,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   int addRestingTime = 16;
   final Ticker _ticker;
 
-  //late AudioHandler audioHandler;
-  //AudioPlayer audioPlayer = AudioPlayer();
-  // AudioSource countdown = AudioSource.uri(Uri.parse('assets:///assets/countdown.mp3'),
-  //   tag: const MediaItem(
-  //       id: "0",
-  //       title: "countdown")
-  // );
-
-  //player.setAudioSource(AudioSource.asset('assets/countdown.mp3'));
-
-
 
   StreamSubscription<int>? _tickerSubscription;
   StreamSubscription<int>? _breakSubscription;

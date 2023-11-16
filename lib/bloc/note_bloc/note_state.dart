@@ -13,7 +13,7 @@ part of 'note_bloc.dart';
 /// Better to store the value in the bloc or the state?
 
 class NoteState extends Equatable {
-  NoteState({this.text = 'Workout Notes'});
+  NoteState({this.text = 'Workout Notes:'});
 
   //String title = 'Notes';
   String text;

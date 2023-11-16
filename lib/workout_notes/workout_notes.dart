@@ -19,7 +19,7 @@ class WorkoutNotes extends StatelessWidget {
 
 
   TextEditingController controller = TextEditingController(
-    text: 'Notes:\n'
+    text: 'Workout Notes:\n'
   );
 
   //String data = context.read<NoteState>().text.toString();

@@ -28,7 +28,7 @@ class BreakTimeSelector extends StatelessWidget {
                       color: Colors.black,
                       //width: MediaQuery.of(context).size.width,
                       child: Text(
-                        'Break Time: ${state.minSelected.toString()} minutes : ${state.secondSelected} seconds',
+                        'Rest Time: ${state.minSelected.toString()} minutes : ${state.secondSelected} seconds',
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ),
@@ -39,7 +39,7 @@ class BreakTimeSelector extends StatelessWidget {
                           ScrollWheel.breakSeconds = 0;
                           },
                         child: const Text(
-                          'Update Break Time',
+                          'Update Rest Time',
                           style: TextStyle(fontSize: 20, color: Colors.blueAccent),
                         )
                     )
@@ -83,14 +83,14 @@ class BreakTimeSelector extends StatelessWidget {
                     //color: Colors.blueAccent,
                     //width: MediaQuery.of(context).size.width,
                     child: Text(
-                      'Break Time: ${state.minSelected} minutes : ${state.secondSelected} seconds',
+                      'Rest Time: ${state.minSelected} minutes : ${state.secondSelected} seconds',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
                   TextButton(
                       onPressed: ()=>context.read<ScrollWheelBloc>().add(OpenScrollWheel()),
                       child: const Text(
-                        'Update Break Time',
+                        'Update Rest Time',
                         style: TextStyle(fontSize: 20, color: Colors.blueAccent),
                       )
                   )

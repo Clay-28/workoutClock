@@ -53,9 +53,10 @@ dependencies:
   provider:
   just_audio_background: ^0.0.1-beta.11
   audio_service: ^0.18.12
-  just_audio: ^0.9.36
   audioplayers: ^5.2.1
   audio_session: ^0.1.17
+  just_audio_mpv: ^0.1.7
+  just_audio: ^0.9.36
 
 dev_dependencies:
   audioplayers_platform_interface: ^6.1.0

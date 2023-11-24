@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Workout Timer',
+        title: const Text('Workout Rest & Go',
           style: TextStyle(
             fontSize: 20,
             color: Colors.white

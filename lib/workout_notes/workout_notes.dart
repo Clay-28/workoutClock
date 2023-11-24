@@ -118,9 +118,3 @@ class WorkoutNotes extends StatelessWidget {
       });
   }
 }
-
-/// Make Notes larger And bluw
-/// Update Larger
-/// Note Page larger
-/// background color black
-/// Update notes to a new font and make bold

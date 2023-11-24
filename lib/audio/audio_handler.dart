@@ -61,7 +61,7 @@ class MyAudioHandler extends BaseAudioHandler
     );
     //await player.setAsset("asset:///assets/audio/countdown.mp3");
     await player.setAsset('assets/audio/countdown.mp3');
-    await player.setVolume(10);
+    await player.setVolume(1);
   }
 
   @override

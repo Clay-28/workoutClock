@@ -76,146 +76,139 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                       List<UserWorkoutNotes> allWorkoutNotes = userWorkoutNotes.values.toList();
                       //Future<List<UserWorkoutNotes>> allWorkoutNotes = WorkoutNotesServices().init().then((value) => WorkoutNotesServices().fetchWorkoutNotes());
 
-                      return GestureDetector(
-                        onDoubleTap: (){
-                          setState(() {
-                            small = !small;
-                          });
-                        },
-                        child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                            const SizedBox(height: 20,),
-                            itemCount: userWorkoutNotes.length,
-                            itemBuilder: (context, index) {
-                              UserWorkoutNotes workoutNote = allWorkoutNotes[(userWorkoutNotes
-                                  .length - 1) - index];
-                              return Slidable(
-                                key: const ValueKey(0),
-                                endActionPane: ActionPane(
-                                    motion: const ScrollMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        // An action can be bigger than the others.
-                                        flex: 1,
-                                        onPressed: (BuildContext context) {
-                                          BlocProvider.of<UserNotesBloc>(context)
-                                              .add(
-                                              DeleteWorkoutNote(index: index));
-                                        },
-                                        backgroundColor: Colors.red,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.delete,
-                                        label: 'Delete',
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ]
+                      return ListView.separated(
+                          separatorBuilder: (context, index) =>
+                          const SizedBox(height: 20,),
+                          itemCount: userWorkoutNotes.length,
+                          itemBuilder: (context, index) {
+                            UserWorkoutNotes workoutNote = allWorkoutNotes[(userWorkoutNotes
+                                .length - 1) - index];
+                            return Slidable(
+                              key: const ValueKey(0),
+                              endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      // An action can be bigger than the others.
+                                      flex: 1,
+                                      onPressed: (BuildContext context) {
+                                        BlocProvider.of<UserNotesBloc>(context)
+                                            .add(
+                                            DeleteWorkoutNote(index: index));
+                                      },
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.white,
+                                      icon: Icons.delete,
+                                      label: 'Delete',
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ]
+                              ),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.white54,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(15))
                                 ),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white54,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))
-                                  ),
-                                  width: double.infinity,
-                                  child: ListTile(
-                                    leading: Column(
-                                      //mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .center,
-                                      children: [
-                                        Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            const Icon(
-                                                Icons.circle_rounded,
-                                                size: 45,
-                                                color: Colors
-                                                    .white //ColorsPallet().fetchColor(workoutNote.weekDay),
-                                            ),
-                                            const Icon(
-                                                Icons.circle_rounded,
-                                                size: 40,
-                                                color: Colors
-                                                    .black //ColorsPallet().fetchColor(workoutNote.weekDay),
-                                            ),
-                                            Icon(
-                                              Icons.fitness_center_rounded,
-                                              size: 30,
-                                              color: ColorsPallet().fetchColor(
-                                                  workoutNote.weekDay),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    title: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 2),
-                                        child: Text(
-                                          '${workoutNote.month} ${workoutNote
-                                              .day} ${workoutNote.year}',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-
-                                    /// Update Hive in Future Text('${workoutNote.month} ${workoutNote.day} ${workoutNote.year}'),
-                                    subtitle: small == true ? Padding(
-                                      padding: const EdgeInsets.only(top: 5),
-                                      child: Container(
-                                        height: 50,
-                                        // -> double tap to expand note or long press? -> single tap to reduce
-                                        child: Text(workoutNote.workoutNotes,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ):
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 5),
-                                      child: Container(
-                                        height: 150,// -> double tap to expand note or long press? -> single tap to reduce
-                                        child: Text(workoutNote.workoutNotes,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-
-
-                                    trailing: Container(
-                                      width: 50,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                width: double.infinity,
+                                child: ListTile(
+                                  leading: Column(
+                                    //mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    children: [
+                                      Stack(
+                                        alignment: Alignment.center,
                                         children: [
-                                          IconButton(
-                                              icon: const Icon(
-                                                Icons.edit_note,
-                                                color: Colors.black,
-                                                size: 30,
-                                              ),
-                                              onPressed: () {
-                                                showBottomSheet(
-                                                    enableDrag: false,
-                                                    backgroundColor: Colors.white,
-                                                    shape: const RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius
-                                                            .all(
-                                                            Radius.circular(50))
-                                                    ),
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return BottomSheetWorkoutNotesEditor(
-                                                        workoutNote: workoutNote,
-                                                        index: index,);
-                                                    });
-                                              }),
+                                          const Icon(
+                                              Icons.circle_rounded,
+                                              size: 45,
+                                              color: Colors
+                                                  .white //ColorsPallet().fetchColor(workoutNote.weekDay),
+                                          ),
+                                          const Icon(
+                                              Icons.circle_rounded,
+                                              size: 40,
+                                              color: Colors
+                                                  .black //ColorsPallet().fetchColor(workoutNote.weekDay),
+                                          ),
+                                          Icon(
+                                            Icons.fitness_center_rounded,
+                                            size: 30,
+                                            color: ColorsPallet().fetchColor(
+                                                workoutNote.weekDay),
+                                          ),
                                         ],
                                       ),
+                                    ],
+                                  ),
+                                  title: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 2),
+                                      child: Text(
+                                        '${workoutNote.month} ${workoutNote
+                                            .day} ${workoutNote.year}',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// Update Hive in Future Text('${workoutNote.month} ${workoutNote.day} ${workoutNote.year}'),
+                                  subtitle: small == true ? Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Container(
+                                      height: 50,
+                                      // -> double tap to expand note or long press? -> single tap to reduce
+                                      child: Text(workoutNote.workoutNotes,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ):
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Container(
+                                      height: 150,// -> double tap to expand note or long press? -> single tap to reduce
+                                      child: Text(workoutNote.workoutNotes,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+
+
+                                  trailing: Container(
+                                    width: 50,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                            icon: const Icon(
+                                              Icons.edit_note,
+                                              color: Colors.black,
+                                              size: 30,
+                                            ),
+                                            onPressed: () {
+                                              showBottomSheet(
+                                                  enableDrag: false,
+                                                  backgroundColor: Colors.white,
+                                                  shape: const RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius
+                                                          .all(
+                                                          Radius.circular(50))
+                                                  ),
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return BottomSheetWorkoutNotesEditor(
+                                                      workoutNote: workoutNote,
+                                                      index: index,);
+                                                  });
+                                            }),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              );
-                            }
-                        ),
+                              ),
+                            );
+                          }
                       );
                     });
               }

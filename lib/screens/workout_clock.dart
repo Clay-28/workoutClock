@@ -34,26 +34,28 @@ class WorkoutClock extends StatelessWidget {
           onWillPop: () async => false,
           child: Padding(
             padding: EdgeInsets.fromLTRB(0,50,0,0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    ClockRing(),
-                    //TimerText(color: Colors.white54,),
-                  ],
-                ),
-                ClockActions(),
-                BreakTimeSelector(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    SlideToFinish(),
-                    WorkoutNotes(),
-                  ],
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      ClockRing(),
+                      //TimerText(color: Colors.white54,),
+                    ],
+                  ),
+                  ClockActions(),
+                  BreakTimeSelector(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SlideToFinish(),
+                      WorkoutNotes(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

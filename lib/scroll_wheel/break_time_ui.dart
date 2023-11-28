@@ -16,7 +16,7 @@ class BreakTimeSelector extends StatelessWidget {
         buildWhen: (prev,state) => prev.runtimeType != state.runtimeType,
         builder: (context, state){
           return Container(
-            height: 200,
+            height: 220,
             width: double.infinity,
             //color: Colors.white,
             child: Column(
@@ -47,7 +47,7 @@ class BreakTimeSelector extends StatelessWidget {
 
                 ScrollWheelInProgress() => [
                   Container(
-                    height: 200,
+                    height: 220,
                     //width: MediaQuery.of(context).size.width * 0.5,
                     child: Column(
                       children: [
@@ -67,7 +67,8 @@ class BreakTimeSelector extends StatelessWidget {
                               padding: EdgeInsets.fromLTRB(0,10,0,0),
                               child: Text('Update',
                                 style: TextStyle(
-                                  fontSize: 20
+                                  fontSize: 20,
+                                  color: Colors.blueAccent
                                 ),
                               ),
                             )

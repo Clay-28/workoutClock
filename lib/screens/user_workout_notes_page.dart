@@ -41,8 +41,8 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
             ),
           ),
           leading: IconButton(
-            onPressed: () {Navigator.pushNamed(context, '/');},
-            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {Navigator.pushNamed(context, '/HomePage');},
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white,),
           ),
           flexibleSpace: Container(
             decoration: const BoxDecoration(
@@ -67,22 +67,17 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                   /// For this project: Every time our userDataBox or Workout notes changes
                   /// A listView will update with its changes
 
-                  // use Provider
-                    valueListenable: Hive.box<UserWorkoutNotes>('userDataBox')
-                        .listenable(),
-                    builder: (context, Box<UserWorkoutNotes> userWorkoutNotes,
-                        _) {
+                    valueListenable: Hive.box<UserWorkoutNotes>('userDataBox').listenable(),
+                    builder: (context, Box<UserWorkoutNotes> userWorkoutNotes, _ ) {
 
                       List<UserWorkoutNotes> allWorkoutNotes = userWorkoutNotes.values.toList();
-                      //Future<List<UserWorkoutNotes>> allWorkoutNotes = WorkoutNotesServices().init().then((value) => WorkoutNotesServices().fetchWorkoutNotes());
 
                       return ListView.separated(
-                          separatorBuilder: (context, index) =>
-                          const SizedBox(height: 20,),
+                          separatorBuilder: (context, index) => const SizedBox(height: 20,),
                           itemCount: userWorkoutNotes.length,
                           itemBuilder: (context, index) {
-                            UserWorkoutNotes workoutNote = allWorkoutNotes[(userWorkoutNotes
-                                .length - 1) - index];
+
+                            UserWorkoutNotes workoutNote = allWorkoutNotes[(userWorkoutNotes.length - 1) - index];
                             return Slidable(
                               key: const ValueKey(0),
                               endActionPane: ActionPane(
@@ -112,36 +107,39 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                                 ),
                                 width: double.infinity,
                                 child: ListTile(
-                                  leading: Column(
-                                    //mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment
-                                        .center,
-                                    children: [
-                                      Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          const Icon(
-                                              Icons.circle_rounded,
-                                              size: 45,
-                                              color: Colors
-                                                  .white //ColorsPallet().fetchColor(workoutNote.weekDay),
-                                          ),
-                                          const Icon(
-                                              Icons.circle_rounded,
-                                              size: 40,
-                                              color: Colors
-                                                  .black //ColorsPallet().fetchColor(workoutNote.weekDay),
-                                          ),
-                                          Icon(
-                                            Icons.fitness_center_rounded,
-                                            size: 30,
-                                            color: ColorsPallet().fetchColor(
-                                                workoutNote.weekDay),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                  leading: Container(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .center,
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            const Icon(
+                                                Icons.circle_rounded,
+                                                size: 46,
+                                                color: Colors
+                                                    .white //ColorsPallet().fetchColor(workoutNote.weekDay),
+                                            ),
+                                            const Icon(
+                                                Icons.circle_rounded,
+                                                size: 42,
+                                                color: Colors
+                                                    .black //ColorsPallet().fetchColor(workoutNote.weekDay),
+                                            ),
+                                            Icon(
+                                              Icons.fitness_center_rounded,
+                                              size: 30,
+                                              color: ColorsPallet().fetchColor(
+                                                  workoutNote.weekDay),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
+
                                   title: Center(
                                     child: Padding(
                                       padding: const EdgeInsets.only(top: 2),
@@ -157,7 +155,7 @@ class _UserWorkoutNotesPageState extends State<UserWorkoutNotesPage> {
                                   subtitle: small == true ? Padding(
                                     padding: const EdgeInsets.only(top: 5),
                                     child: Container(
-                                      height: 50,
+                                      height: 55,
                                       // -> double tap to expand note or long press? -> single tap to reduce
                                       child: Text(workoutNote.workoutNotes,
                                         style: TextStyle(color: Colors.white),

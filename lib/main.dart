@@ -1,3 +1,4 @@
+import 'package:WorkoutClock/screens/intro_screen.dart';
 import 'package:WorkoutClock/services/workout_note_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,10 +35,10 @@ class WorkoutApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
-          '/': (context) => HomePage(),
-          '/WorkoutClockPage': (context) => WorkoutClockPage(),
-          '/UserWorkoutNotesPage': (context) => UserWorkoutNotesPage(),
-          '/UserWorkoutNotePage': (context) => UserWorkoutNotesPage(),
+          '/': (context) => IntroScreen(), //HomePage(),
+          '/WorkoutClockPage': (context) => const WorkoutClockPage(),
+          '/UserWorkoutNotesPage': (context) => const UserWorkoutNotesPage(),
+          '/HomePage': (context) => const HomePage(),
         }
       )
     );

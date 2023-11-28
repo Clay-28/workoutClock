@@ -1,3 +1,4 @@
+import 'package:WorkoutClock/screens/intro_screen.dart';
 import 'package:capped_progress_indicator/capped_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,15 @@ class HomePage extends StatelessWidget {
             )
           ),
         ),
+        /// Added to test the launch screen animation
+        /*
+        actions: [
+          IconButton(
+              onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen())); },
+              icon: Icon(Icons.add, size: 25, color: Colors.white,))
+        ],
+
+         */
       ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.center,

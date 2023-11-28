@@ -29,7 +29,7 @@ class WorkoutNotes extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.fromLTRB(0,20,0,0),
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.33,
+              width: MediaQuery.of(context).size.width * 0.30,
               child: MaterialButton(
                   onPressed: (){
                       showBottomSheet(

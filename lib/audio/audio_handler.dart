@@ -10,16 +10,86 @@ class MyAudioHandler extends BaseAudioHandler
         SeekHandler {
 
 
+  /*
+  /// Each time MyAudioHandler is called, both the Audio Ducking and Audio Source will be updated
+  MyAudioHandler(bool ducking, int index) {
+    //ducking ? duckingAudioService() : initAudioService(); /// Sets the audio session of this app
+    //setMusic(); /// creates an audio player and set the audio to a local asset mp3
+    //selectItem(index);
+  }
+   */
+
+  /// Test
+
+  MyAudioHandler(bool ducking, int index) {
+    ducking ? duckingAudioService() : initAudioService(); /// Sets the audio session of this app
+    //setMusic(); /// creates an audio player and set the audio to a local asset mp3
+    selectItem(index);
+  }
 
 
-  MyAudioHandler() {
-    initAudioService(); /// Sets the audio session of this app
-    setMusic(); /// creates an audio player and set the audio to a local asset mp3
+  late ja.AudioPlayer player;
+
+
+  final playlist = ja.ConcatenatingAudioSource(
+    // Start loading next item just before reaching it
+    useLazyPreparation: true,
+    // Specify the playlist items
+    children: [
+      ja.AudioSource.asset('assets/audio/countdown.mp3'),
+      ja.AudioSource.asset('assets/audio/silent_music.mp3'),
+    ],
+  );
+
+  Future<void> selectItem(int index) async {
+    player = ja.AudioPlayer(
+        handleAudioSessionActivation: false,
+        handleInterruptions: false
+    );
+    await player.setAudioSource(playlist[index]);
   }
 
 
   initAudioService() async {
+
     final session = await AudioSession.instance;
+
+    await session.configure(const AudioSessionConfiguration(
+      avAudioSessionCategory: AVAudioSessionCategory.playback,
+      avAudioSessionCategoryOptions: AVAudioSessionCategoryOptions.mixWithOthers,
+      avAudioSessionMode: AVAudioSessionMode.defaultMode,
+      avAudioSessionRouteSharingPolicy: AVAudioSessionRouteSharingPolicy.defaultPolicy,
+      avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.notifyOthersOnDeactivation,
+      androidAudioAttributes: AndroidAudioAttributes(
+        contentType: AndroidAudioContentType.music,
+        flags: AndroidAudioFlags.none,
+        usage: AndroidAudioUsage.media,
+      ),
+      androidAudioFocusGainType: AndroidAudioFocusGainType
+          .gainTransientMayDuck,
+      androidWillPauseWhenDucked: true,
+    ));
+
+    //return active ? session.setActive(false) : session.setActive(true); // by setActive == false -> it removes ducking
+    return session.setActive(true);
+    //INITIALIZE audio_service
+    /*
+    return await AudioService.init(
+      builder: () => AudioPlayerService(),
+      config: const AudioServiceConfig(
+        androidNotificationChannelId: 'com.YOUR_COMPANY.YOUR_APP_NAME.audio',
+        androidNotificationChannelName: 'Audio Service Demo',
+        androidNotificationOngoing: true,
+        androidStopForegroundOnPause: true,
+      ),
+    );
+     */
+  }
+
+  duckingAudioService() async {
+
+    final session = await AudioSession.instance;
+
     await session.configure(const AudioSessionConfiguration(
       avAudioSessionCategory: AVAudioSessionCategory.playback,
       avAudioSessionCategoryOptions: AVAudioSessionCategoryOptions.duckOthers,
@@ -35,7 +105,8 @@ class MyAudioHandler extends BaseAudioHandler
           .gainTransientMayDuck,
       androidWillPauseWhenDucked: true,
     ));
-    return session.setActive(false); // by setActive == false -> it removes ducking
+
+    return session.setActive(true); // by setActive == false -> it removes ducking
 
     //INITIALIZE audio_service
     /*
@@ -51,19 +122,41 @@ class MyAudioHandler extends BaseAudioHandler
      */
   }
 
-  late ja.AudioPlayer player;
-
-
+  /*
   void setMusic() async{
+
     player = ja.AudioPlayer(
         handleAudioSessionActivation: false,
         handleInterruptions: false
     );
-    //await player.setAsset("asset:///assets/audio/countdown.mp3");
+    silentMusic = ja.AudioPlayer();
+
+    /*
     await player.setAsset('assets/audio/countdown.mp3');
+    //await player.setAsset('assets/audio/silent_music.mp3');
     await player.setVolume(1);
+
+    silentMusic = ja.AudioPlayer(
+      handleInterruptions: false,
+      handleAudioSessionActivation: false
+    );
+    await silentMusic.setAsset('assets/audio/silent_music.mp3');
+
+     */
+
+    await silentMusic.setAsset('assets/audio/countdown.mp3');
+    //await player.setAsset('assets/audio/silent_music.mp3');
+    await silentMusic.setVolume(1);
+
+    player = ja.AudioPlayer(
+        handleInterruptions: false,
+        handleAudioSessionActivation: false
+    );
+    await player.setAsset('assets/audio/countdown-sound.mp3');
+    //await player.setAsset('assets/audio/countdown.mp3');
   }
 
+   */
   @override
   Future<void> play() async {
     /*
@@ -76,15 +169,19 @@ class MyAudioHandler extends BaseAudioHandler
      */
 
     //await player.setAsset('assets/audio/countdown.mp3');
+
     player.play();
+
   }
+
 
   @override
   Future<void> pause() async {}
 
   @override
   Future<void> stop() async {
-    player;
+    player.stop();
+    initAudioService();
   }
 
   @override
@@ -93,5 +190,7 @@ class MyAudioHandler extends BaseAudioHandler
     await player.play();
   }
 
+
 }
+
 

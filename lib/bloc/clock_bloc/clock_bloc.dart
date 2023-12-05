@@ -14,16 +14,16 @@ part 'bloc_event.dart';
 class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
 
-  MyAudioHandler createMusic(){
-    return MyAudioHandler();
-  }
-
 
   int restTime = 89;
   double totalRestingTime = 89;
   int addRestingTime = 16;
   final Ticker _ticker;
 
+  /// sets the audio session to not duck audio, this allows a silent audio mp3 to play,
+  /// 0: is a countdown mp3
+  /// 1: is a silent mp3
+  MyAudioHandler audioPlayer = MyAudioHandler(false, 1);
 
   StreamSubscription<int>? _tickerSubscription;
   StreamSubscription<int>? _breakSubscription;
@@ -71,7 +71,10 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
   void _onBreakStarted( BreakStared event, Emitter<TimerState> emit) async{
     if(state.status  == ClockStatus.resting){
-      MyAudioHandler().stop();
+
+     /// MyAudioHandler(true,0).stop();
+      audioPlayer.stop();
+
       totalRestingTime = event.totalRestingTime.toDouble();
       _breakSubscription?.cancel();
       _breakSubscription = _ticker.breaktick(seconds: event.restingTime).listen((event) => add(BreakCountDown(restTime: event)));
@@ -91,10 +94,15 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
       emit(state.copyWith(restTime: event.restTime, status: ClockStatus.resting));
     }
     if(state.restTime.round() == 5){
-      MyAudioHandler().play();
+      /// Setting MyAudioHandler == true: adjust the audio session configuration to duck audio
+      /// Setting MyAudioHandler == false: adjust the audio session configuration to mix with others
+      audioPlayer.stop();
+      audioPlayer = MyAudioHandler(true, 0);
+      audioPlayer.play();
     }
     if(event.restTime < 1){
-      MyAudioHandler().stop();
+      //audioPlayer.initAudioService();
+      audioPlayer.stop();
       _breakSubscription?.cancel();
       totalRestingTime = restTime.toDouble();
       emit(state.copyWith(duration: state.duration, restTime: restTime, status: ClockStatus.running));
@@ -104,11 +112,19 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
 
   void _onStarted(TimerStarted event, Emitter<TimerState> emit){
-    MyAudioHandler().stop();
+
+    audioPlayer.stop();
+    audioPlayer = MyAudioHandler(false, 1);
+    audioPlayer.play();
+
+
     totalRestingTime = restTime.toDouble();
     _breakSubscription?.cancel();
     _tickerSubscription = _ticker.tick(seconds: event.duration)
         .listen((event) => add(_TimerTicked(duration: event)));
+
+
+
     emit(state.copyWith(status: ClockStatus.running, duration: event.duration, restTime: restTime));
   }
 

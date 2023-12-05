@@ -102,7 +102,11 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
     }
     if(event.restTime < 1){
       //audioPlayer.initAudioService();
+      /// Stops the countdown audio
       audioPlayer.stop();
+      /// Sets Audio Session to allow mixed audio, audio to silent mp3 and plays plays the mp3
+      audioPlayer = MyAudioHandler(false, 1);
+      audioPlayer.play();
       _breakSubscription?.cancel();
       totalRestingTime = restTime.toDouble();
       emit(state.copyWith(duration: state.duration, restTime: restTime, status: ClockStatus.running));

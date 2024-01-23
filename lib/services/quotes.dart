@@ -10,7 +10,8 @@ class Quotes{
     ''' "Some people want it to happen, some wish it would happen, others make it happen." - Michael Jordan ''',
     ''' "Discipline is the bridge between goals and accomplishment." - Jim Rohn ''',
     ''' "We cannot start over. But we can begin now and make a new ending.” -Zig Ziglar ''',
-    ''' "Every champion was once a contender that refused to give up." -Sylvester Stallone '''
+    ''' "Every champion was once a contender that refused to give up." -Sylvester Stallone ''',
+    ''' "123" -Sylvester Stallone ''',
   ];
 
 

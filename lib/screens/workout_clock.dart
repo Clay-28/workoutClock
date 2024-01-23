@@ -1,5 +1,7 @@
 
 import 'package:WorkoutClock/bloc/clock_bloc/clock_bloc.dart';
+import 'package:WorkoutClock/models/clock_display.dart';
+import 'package:WorkoutClock/models/motivational_quotes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,20 +35,30 @@ class WorkoutClock extends StatelessWidget {
         ],
         child: PopScope(
           canPop: false,
+          /// Add a Single Child Scroll View to help RenderFlex overlapping between *Add-Notes Show-Bottom-Sheet and Scroll Wheel
           child: Padding(
             padding: EdgeInsets.fromLTRB(0,50,0,0),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      ClockRing(),
-                      //TimerText(color: Colors.white54,),
-                    ],
+                  /// CustomScrollView -> Horizonal, Quotes, Clock
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.45,
+                    //color: Colors.white,
+                    child: const CustomScrollView(
+                     physics: ScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: MotivationalQuotes()
+                        ),
+                        SliverToBoxAdapter(
+                            child: ClockDisplay()
+                        )
+                      ],
+                    ),
                   ),
-                  ClockActions(),
                   BreakTimeSelector(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,

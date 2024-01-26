@@ -33,3 +33,7 @@ final class ScrollWheelUpdate extends ScrollWheelState{
   @override
   List<Object> get props => [minSelected, secondSelected];
 }
+
+final class ScrollWheelVanish extends ScrollWheelState{
+  ScrollWheelVanish();
+}

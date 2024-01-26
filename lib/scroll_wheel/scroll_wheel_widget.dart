@@ -1,19 +1,23 @@
 
 
+import 'package:WorkoutClock/bloc/clock_bloc/clock_bloc.dart';
+import 'package:WorkoutClock/bloc/scroll_wheel_bloc/scroll_wheel_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'scroll_wheel_minutes.dart';
 import 'scroll_wheel_seconds.dart';
 
 class ScrollWheel extends StatelessWidget {
-  const ScrollWheel({super.key});
+  ScrollWheel({super.key});
   
 
-  static int breakMinuets = 0;
-  static int breakSeconds = 0;
+  static int breakMinuets = 1;
+  static int breakSeconds = 30;
 
   @override
   Widget build(BuildContext context) {
+    final int userSelectedMinutes = ScrollWheelBloc.breakminutes;
+    final int userSelectedSeconds = ScrollWheelBloc.breakseconds;
     return Container(
       height: 150,
       //width: 300,
@@ -26,6 +30,7 @@ class ScrollWheel extends StatelessWidget {
             width: 50,
             child: ListWheelScrollView.useDelegate(
                 itemExtent: 40,
+                controller: FixedExtentScrollController(initialItem: userSelectedMinutes),
                 physics: FixedExtentScrollPhysics(),
                 diameterRatio: 1.5,
                 onSelectedItemChanged: (value){
@@ -63,6 +68,7 @@ class ScrollWheel extends StatelessWidget {
             width: 50,
             child: ListWheelScrollView.useDelegate(
                 itemExtent: 40,
+                controller: FixedExtentScrollController(initialItem: userSelectedSeconds),
                 physics: FixedExtentScrollPhysics(),
                 diameterRatio: 1.5,
                 onSelectedItemChanged: (value){

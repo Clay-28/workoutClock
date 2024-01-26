@@ -29,3 +29,7 @@ class UpdateScrollWheel extends ScrollEvent{
   @override
   List<Object> get props => [breakMinutes, breakSeconds];
 }
+
+class VanishScrollWheel extends ScrollEvent{
+  VanishScrollWheel();
+}

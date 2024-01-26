@@ -1,4 +1,5 @@
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:capped_progress_indicator/capped_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,11 +48,12 @@ class HomePage extends StatelessWidget {
            Padding(
              padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
              child: Center(
-               child: Text( Quotes().randomQuote().first,
+               child: AutoSizeText( Quotes().randomQuote().first,
                  style: GoogleFonts.bebasNeue(
                    fontSize: 35,
-                   color: Colors.blueAccent
+                   color: Colors.blueAccent,
                  ) ,
+                 minFontSize: 25,
                ),
              ),
            ),

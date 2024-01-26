@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,15 +26,14 @@ class _MotivationalQuotesState extends State<MotivationalQuotes> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+            padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
             child: Center(
-              child: Container(
-                child: Text( fetchQuote().first,
-                    maxLines: 4,
-                    style: GoogleFonts.bebasNeue(
-                        fontSize: 35,
-                        color: Colors.blueAccent),
-                ),
+              child: AutoSizeText( fetchQuote().first,
+                  maxLines: 5,
+                  minFontSize: 25,
+                  style: GoogleFonts.bebasNeue(
+                      fontSize: 35,
+                      color: Colors.blueAccent),
               ),
             ),
           ),
@@ -49,20 +49,21 @@ class _MotivationalQuotesState extends State<MotivationalQuotes> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.white,
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20, top: 10.0),
+              child: TextButton(
+                onPressed: (){
+                  print(fetchQuote());
+                  setState(() {
+                    fetchQuote();
+                  });
+                },
+                child: Text('Refresh',
+                    style: GoogleFonts.bebasNeue( fontSize: 30, color: Colors.blueAccent)
+                )
               ),
-              onPressed: (){
-                setState(() {
-                  fetchQuote();
-                });
-              },
-              child: Text('Refresh',
-                  style: GoogleFonts.bebasNeue( fontSize: 30, color: Colors.blueAccent)
-              )
             ),
           )
         ],

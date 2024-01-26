@@ -1,5 +1,6 @@
 
 import 'package:WorkoutClock/bloc/clock_bloc/clock_bloc.dart';
+import 'package:WorkoutClock/models/Quotes_Clock_Workouts.dart';
 import 'package:WorkoutClock/models/clock_display.dart';
 import 'package:WorkoutClock/models/motivational_quotes.dart';
 import 'package:flutter/material.dart';
@@ -39,36 +40,27 @@ class WorkoutClock extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.fromLTRB(0,50,0,0),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Stack(
                 children: [
-                  /// CustomScrollView -> Horizonal, Quotes, Clock
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.45,
-                    //color: Colors.white,
-                    child: const CustomScrollView(
-                     physics: ScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: MotivationalQuotes()
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        /// CustomScrollView -> Horizonal, Quotes, Clock
+                        QuotesClockWorkouts(),
+                        BreakTimeSelector(),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SlideToFinish(),
+                            WorkoutNotes(),
+                          ],
                         ),
-                        SliverToBoxAdapter(
-                            child: ClockDisplay()
-                        )
                       ],
                     ),
                   ),
-                  BreakTimeSelector(),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SlideToFinish(),
-                      WorkoutNotes(),
-                    ],
-                  ),
                 ],
-              ),
+              )
             ),
           ),
         ),

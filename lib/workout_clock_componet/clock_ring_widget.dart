@@ -42,7 +42,7 @@ class ClockRing extends StatelessWidget {
                       height: 230,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(width: 2, color: Colors.black, style: BorderStyle.solid)
+                          border: Border.all(width: 2, color: Colors.white54, style: BorderStyle.solid)
                       ),
                     ),
                   ],

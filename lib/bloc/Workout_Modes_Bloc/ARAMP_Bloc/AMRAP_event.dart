@@ -10,9 +10,9 @@ class AMRAPEvent {
 }
 
 class AmrapStart extends AMRAPEvent {
-  int duration;
+  //int duration;
 
-  AmrapStart({required this.duration});
+  AmrapStart();
 }
 
 class AmrapPause extends AMRAPEvent {
@@ -20,6 +20,16 @@ class AmrapPause extends AMRAPEvent {
 }
 
 class AmrapUpdate extends AMRAPEvent {
+  AMRAP_Status? status;
   int duration;
-  AmrapUpdate({required this.duration});
+  AmrapUpdate({required this.duration, this.status});
+}
+
+class AmrapClose extends AMRAPEvent{
+  AmrapClose();
+}
+
+class AmrapCountDown extends AMRAPEvent{
+  int duration;
+  AmrapCountDown({required this.duration});
 }

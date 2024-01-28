@@ -18,7 +18,10 @@ class QuotesClockWorkouts extends StatefulWidget {
 
 PageController controller = PageController(initialPage: 1);
 int _currentPosition = 1 ; /// We want to start at position 2
+//List<Widget> _quotesClockApp = [ KeepAlivePage(child: MotivationalQuotes()), KeepAlivePage(child: ClockDisplay()), KeepAlivePage(child: SelectWorkoutMode())];
+
 List<Widget> _quotesClockApp = [ KeepAlivePage(child: MotivationalQuotes()), KeepAlivePage(child: ClockDisplay()), KeepAlivePage(child: SelectWorkoutMode())];
+
 
 class _QuotesClockWorkoutsState extends State<QuotesClockWorkouts> {
   @override

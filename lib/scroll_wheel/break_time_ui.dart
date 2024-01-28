@@ -103,7 +103,9 @@ class BreakTimeSelector extends StatelessWidget {
                   )
                 ],
 
-                ScrollWheelVanish() => [ ],
+                ScrollWheelVanish() => [
+                  /// We could add anything here!
+                ],
 
                 _ => [],
                 // ScrollWheelInitial, ScrollWheelInProgress

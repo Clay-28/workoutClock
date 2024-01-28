@@ -1,13 +1,13 @@
 
 part of 'AMRAP_bloc.dart';
 
-enum AMRAP_Status {initial, paused, inProgress}
+enum AMRAP_Status {initial, countdown, paused, inProgress,}
 
 class AMRAPState {
 
-  AMRAP_Status status = AMRAP_Status.initial;
-  int duration = 10;
-  int rounds = 0;
+  AMRAP_Status status;
+  int duration;
+  int rounds;
 
 
   AMRAPState({ required this.status, required this.duration, required this.rounds});

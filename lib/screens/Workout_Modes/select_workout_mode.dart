@@ -3,13 +3,15 @@ import 'package:WorkoutClock/models/clock_display.dart';
 import 'package:WorkoutClock/screens/Workout_Modes/initial_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../ARAMP_Componets/ARAMP_Clock_Display.dart';
+import '../../ARAMP_Componets/AMRAP_Display/ARAMP_Clock_Display.dart';
 import '../../bloc/Workout_Modes_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 
 
 
 class SelectWorkoutMode extends StatelessWidget {
   const SelectWorkoutMode({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {

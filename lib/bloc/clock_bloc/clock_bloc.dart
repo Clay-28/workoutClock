@@ -124,12 +124,17 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
 
     totalRestingTime = restTime.toDouble();
     _breakSubscription?.cancel();
+
+    emit(state.copyWith(status: ClockStatus.running, duration: event.duration, restTime: restTime));
+
     _tickerSubscription = _ticker.tick(seconds: event.duration)
         .listen((event) => add(_TimerTicked(duration: event)));
 
+    // Future.delayed(Duration(milliseconds: 500,), (){
+    //   _tickerSubscription = _ticker.tick(seconds: event.duration)
+    //       .listen((event) => add(_TimerTicked(duration: event)));
+    // });
 
-
-    emit(state.copyWith(status: ClockStatus.running, duration: event.duration, restTime: restTime));
   }
 
   void _onPaused( TimerPaused event, Emitter<TimerState>  emit){
@@ -141,13 +146,19 @@ class TimerBloc extends Bloc<TimerEvent, TimerState>{
   }
 
   void _onTicked(_TimerTicked event, Emitter<TimerState> emit){
-    emit(state.copyWith(duration: event.duration, status: ClockStatus.running));
+    //emit(state.copyWith(duration: event.duration, status: ClockStatus.running));
+    emit(state.copyWith(duration: event.duration));
   }
 
   void _onReset(TimerReset event, Emitter<TimerState> emit){
     _tickerSubscription?.cancel();
     _breakSubscription?.cancel();
     _addBreakSubscription?.cancel();
+    totalRestingTime = 89;
+    restTime = 89;
+    emit(state.copyWith(duration: 0,
+        restTime: 89,
+        status: ClockStatus.initial));
   }
 
 

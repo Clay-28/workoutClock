@@ -33,3 +33,7 @@ class UpdateScrollWheel extends ScrollEvent{
 class VanishScrollWheel extends ScrollEvent{
   VanishScrollWheel();
 }
+
+class ResetScrollWheel extends ScrollEvent{
+
+}

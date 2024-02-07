@@ -9,9 +9,9 @@ import 'user_workout_notes_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    List<String> quote = Quotes().randomQuote();
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -31,15 +31,6 @@ class HomePage extends StatelessWidget {
               )
             ),
           ),
-          /// Added to test the launch screen animation
-          /*
-          actions: [
-            IconButton(
-                onPressed: (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> IntroScreen())); },
-                icon: Icon(Icons.add, size: 25, color: Colors.white,))
-          ],
-
-           */
           automaticallyImplyLeading: false,
         ),
         body: Column(
@@ -48,18 +39,19 @@ class HomePage extends StatelessWidget {
            Padding(
              padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
              child: Center(
-               child: AutoSizeText( Quotes().randomQuote().first,
+               child: AutoSizeText( quote.first,
                  style: GoogleFonts.bebasNeue(
                    fontSize: 35,
                    color: Colors.blueAccent,
                  ) ,
                  minFontSize: 25,
+                 maxLines: 6,
                ),
              ),
            ),
             Align(
               alignment: Alignment.bottomRight,
-              child: Text( '-${Quotes().randomQuote().last}',
+              child: Text( '-${quote.last}',
                 style: GoogleFonts.bebasNeue(
                     fontSize: 30,
                     color: Colors.blueAccent

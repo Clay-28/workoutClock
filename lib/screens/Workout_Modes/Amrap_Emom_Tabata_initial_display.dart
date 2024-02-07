@@ -1,10 +1,12 @@
+import 'package:WorkoutClock/bloc/middle_area_bloc/middle_area_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/Workout_Modes_Bloc/Modes_Bloc/modes_bloc.dart';
+import '../../bloc/Amrap_Emom_Tabata_Bloc/Modes_Bloc/modes_bloc.dart';
 
-class InitialDisplay extends StatelessWidget {
-  const InitialDisplay({super.key});
+
+class Amrap_Emom_Tabata_InitialDisplay extends StatelessWidget {
+  const Amrap_Emom_Tabata_InitialDisplay({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,14 @@ class InitialDisplay extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+
+                  /// Sets the Clock Display to Amrap
                   BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.ARAMP));
+                  /// Updates the Space between Clock Display and Slide Action Widget
+                  /// With a Horizontal Scroll View With Amrap Workouts
+                  BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Amramp));
+                  //BlocProvider.of<MiddleAreaBloc>(context).add(UpdateState(status: MiddleAreaStatus.Clock));
+
                 },
                 child: const Center(child: Text(
                   'AMRAP', style: TextStyle(color: Colors.white, fontSize: 25),)),
@@ -66,7 +75,12 @@ class InitialDisplay extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      null;
+                      /// Changes the WorkoutModes State and Displays Emom Initial Display
+                      //BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.ARAMP));
+                      BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.EMOM));
+                       /// Updates the Space between Clock Display and Slide Action Widget
+                      /// With a Horizontal Scroll View With Amrap Workouts
+                      BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Emom));
                     },
                     child: const Center(child: Text(
                       'EMOM', style: TextStyle(color: Colors.white, fontSize: 25),)),
@@ -93,7 +107,8 @@ class InitialDisplay extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      null;
+                      /// Changes WorkoutMode state and display to Tabata
+                      BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.TABATA));
                     },
                     child: const Center(child: Text(
                       'TABATA', style: TextStyle(color: Colors.white, fontSize: 25),)),

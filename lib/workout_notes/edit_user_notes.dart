@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,15 +7,75 @@ import 'package:google_fonts/google_fonts.dart';
 import '../bloc/user_note_bloc/user_notes_bloc.dart';
 import '../models/user_workout_data.dart';
 
-class BottomSheetWorkoutNotesEditor extends StatelessWidget {
+class BottomSheetWorkoutNotesEditor extends StatefulWidget {
+
   BottomSheetWorkoutNotesEditor({super.key, required this.workoutNote, required this.index});
   late int index;
   late UserWorkoutNotes workoutNote;
 
   @override
+  State<BottomSheetWorkoutNotesEditor> createState() => _BottomSheetWorkoutNotesEditorState();
+}
+
+class _BottomSheetWorkoutNotesEditorState extends State<BottomSheetWorkoutNotesEditor> {
+
+
+  ScrollController scrollController = ScrollController(initialScrollOffset: 0.0);
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // scrollController = ScrollController(initialScrollOffset: 0.0);
+    // print('init State offset: ${scrollController.offset}');
+    // // setState(() {
+    // //  scrollController = ScrollController(initialScrollOffset: 0.0);
+    // // });
+
+    //scrollController.jumpTo(0.0);
+
+  }
+
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   scrollController = ScrollController(initialScrollOffset: 0.0);
+  // }
+  //
+  // late ScrollController scrollController;
+
+
+  //ScrollController scrollController = ScrollController(initialScrollOffset: offSet);
+
+
+
+
+  @override
   Widget build(BuildContext context) {
 
-    TextEditingController controller = TextEditingController(text: workoutNote.workoutNotes);
+    // ScrollController scrollController = ScrollController();
+
+    Future.delayed(Duration(milliseconds: 100), (){
+      scrollController.jumpTo(0.0);
+      //scrollController.animateTo(0.0, duration: Duration(milliseconds: 100), curve: Curves.linear);
+    });
+    TextEditingController controller = TextEditingController(text: widget.workoutNote.workoutNotes);
+    controller.selection.end;
+    //
+    // double _position = 0.0;
+    //
+    // scrollController.addListener(() {
+    //   print(scrollController.offset);
+    // });
+
+
+
+
+    //ScrollController scrollController = ScrollController(initialScrollOffset: 0.0);
 
     return Container(
       //color: Colors.black,
@@ -29,7 +91,7 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(0,20,0,0),
             child: Center(
-              child: Text('${workoutNote.month} ${workoutNote.day} ${workoutNote.year}',
+              child: Text('${widget.workoutNote.month} ${widget.workoutNote.day} ${widget.workoutNote.year}',
                 style: GoogleFonts.spaceMono(
                     fontSize: 20,
                     color: Colors.blueAccent
@@ -42,6 +104,7 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
             child : Container(
               height: MediaQuery.of(context).size.height * 0.30,
               child: TextField(
+                scrollController: scrollController,
                 autofocus: true,
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.all(25),
@@ -50,12 +113,13 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
                 ),
+
                 controller: controller,
                 maxLines: 20,
                 style: GoogleFonts.spaceMono(
-                  fontSize: 20
+                  fontSize: 16
                   ,
-                  color: Colors.blueAccent,
+                  color: Colors.white,
                   height: 1.5,
                   wordSpacing: 0.1,
                 ),
@@ -65,16 +129,19 @@ class BottomSheetWorkoutNotesEditor extends StatelessWidget {
           TextButton(
             onPressed: ()  {
 
+              //scrollController.jumpTo(0.0, duration: Duration(seconds: 1), curve: Curves.linear);
+
+              scrollController = ScrollController(initialScrollOffset: 0.0);
               BlocProvider.of<UserNotesBloc>(context).add(EditWorkoutNote(userWorkoutNotes:
               UserWorkoutNotes(
                   workoutNotes: controller.text,
-                  day: workoutNote.day,
-                  year: workoutNote.year,
-                  weekDay: workoutNote.weekDay,
-                  month: workoutNote.month,
-                  workoutTime: workoutNote.workoutTime),
-                  index: index));
-              Navigator.pop(context);
+                  day: widget.workoutNote.day,
+                  year: widget.workoutNote.year,
+                  weekDay: widget.workoutNote.weekDay,
+                  month: widget.workoutNote.month,
+                  workoutTime: widget.workoutNote.workoutTime),
+                  index: widget.index));
+             Navigator.pop(context);
               //BlocProvider.of<UserNotesBloc>(context).add(EditWorkoutNote(notes: controller.text, index: index));
 
             },

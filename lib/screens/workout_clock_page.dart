@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'workout_clock.dart';
+import 'Main_workout_clock_screen.dart';
 
 
 class WorkoutClockPage extends StatelessWidget {

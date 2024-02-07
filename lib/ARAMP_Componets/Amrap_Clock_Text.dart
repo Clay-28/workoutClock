@@ -1,6 +1,7 @@
-import 'package:WorkoutClock/bloc/Workout_Modes_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 
 
 class Amrap_Clock_Text extends StatelessWidget {

@@ -19,9 +19,21 @@ class CloseNote extends NoteEvent{
 
 class UpdateNotes extends NoteEvent{
   final String text;
-  UpdateNotes({required this.text});
+  bool? finished;
+  int? duration;
+  UpdateNotes({required this.text, this.finished, this.duration});
+}
+
+class AddWorkout extends NoteEvent{
+  final AmrapModel ArmapWorkout;
+  AddWorkout({required this.ArmapWorkout});
 }
 
 class RegisterHiveEvent extends NoteEvent{
   RegisterHiveEvent();
+}
+
+class HideNotes extends NoteEvent{
+  NoteStatus noteStatus;
+  HideNotes({required this.noteStatus});
 }

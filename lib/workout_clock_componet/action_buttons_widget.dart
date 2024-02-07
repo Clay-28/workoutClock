@@ -21,7 +21,7 @@ class ClockActions extends StatelessWidget {
 
 
     return BlocBuilder<TimerBloc, TimerState>(
-        //buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
+        buildWhen: (prev, state) => state.status != prev.status,
         builder: (context, state) {
           return Center(
             child: Padding(

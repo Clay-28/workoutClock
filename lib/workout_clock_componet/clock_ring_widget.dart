@@ -17,6 +17,7 @@ class ClockRing extends StatelessWidget {
 
 
     return BlocBuilder<TimerBloc, TimerState>(
+      buildWhen: (previous, current) => current.status != previous.status,
       builder: (context, state){
         return Center(
           child: Column(

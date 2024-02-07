@@ -59,6 +59,8 @@ dependencies:
   another_flutter_splash_screen: ^1.2.0
   auto_size_text: ^3.0.0
   font_awesome_flutter: ^10.6.0
+  confetti: ^0.7.0
+  bloc_test: ^9.1.5
 
 dev_dependencies:
   flutter_test:

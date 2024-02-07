@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:WorkoutClock/ARAMP_Componets/AMRAP_Display/ARAMP_Display_Componets/Amrap_finished_workout.dart';
 import 'package:capped_progress_indicator/capped_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,12 +8,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 
-import '../../bloc/Workout_Modes_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
-import '../../bloc/Workout_Modes_Bloc/Modes_Bloc/modes_bloc.dart';
+import '../../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 import '../ARAMP_Scroll_Wheel/Amrap_scroll_wheel_widget.dart';
-import '../Clock_Text.dart';
-import 'ARAMP_Display_Componets/Amrap_inProgress.dart';
-import 'ARAMP_Display_Componets/Amrap_initial.dart';
+import '../Amrap_Clock_Text.dart';
+import 'ARAMP_Display_Componets/Amrap_inProgress_display.dart';
+import 'ARAMP_Display_Componets/Amrap_initial_display.dart';
 import 'ARAMP_Display_Componets/Amrap_paused.dart';
 
 class ARAMPClock extends StatelessWidget {
@@ -26,7 +26,18 @@ class ARAMPClock extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AMRAPBloc, AMRAPState>
       (builder: (context, state ){
+        // if(state.status == AMRAP_Status.initial || state.status == AMRAP_Status.selectingWorkout) {
+        //   return Amrap_initial_display(state: state);
+        // }
+
         if(state.status == AMRAP_Status.initial) {
+          return Amrap_initial_display(state: state);
+        }
+
+        if(state.status == AMRAP_Status.selectingWorkout){
+          return Amrap_initial_display(state: state);
+        }
+        if(state.status == AMRAP_Status.helper){
           return Amrap_initial_display(state: state);
         }
         /// ------------------------ In Progress ------------------------
@@ -35,6 +46,9 @@ class ARAMPClock extends StatelessWidget {
         }
         if(state.status == AMRAP_Status.paused){
           return Amrap_paused_display(state: state);
+        }
+        if(state.status == AMRAP_Status.finished){
+          return Amrap_finished_display(state: state);
         }
         return const Text('Error Occurred, Please Refresh');
     });

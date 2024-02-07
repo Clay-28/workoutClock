@@ -21,19 +21,21 @@ class ScrollWheelBloc extends Bloc<ScrollEvent, ScrollWheelState>{
     emit(ScrollWheelInProgress());
   }
 
-
   _onCloseScrollWheel(CloseScrollWheel event, Emitter<ScrollWheelState> emit) {
-
     emit(ScrollWheelInitial(minSelected: event.breakMinutes, secondSelected: event.breakSeconds));
   }
 
   void _onUpdateScrollWheel(UpdateScrollWheel event, Emitter<ScrollWheelState> state){
     // userSelectedMinutes = event.breakMinutes;
     // userSelectedSeconds = event.breakSeconds;
+    breakminutes = event.breakMinutes;
+    breakseconds = event.breakSeconds;
     emit(ScrollWheelUpdate(minSelected: event.breakMinutes, secondSelected: event.breakSeconds));
   }
 
   void _onVanishScrollWheel(VanishScrollWheel event, Emitter<ScrollWheelState> state){
     emit(ScrollWheelVanish());
   }
+
+
 }

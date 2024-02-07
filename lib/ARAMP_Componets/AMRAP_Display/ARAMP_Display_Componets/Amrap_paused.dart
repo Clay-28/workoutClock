@@ -2,15 +2,17 @@ import 'package:capped_progress_indicator/capped_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../../../bloc/Workout_Modes_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
-import '../../../bloc/Workout_Modes_Bloc/Modes_Bloc/modes_bloc.dart';
-import '../../Clock_Text.dart';
+import '../../../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
+import '../../../bloc/Amrap_Emom_Tabata_Bloc/Modes_Bloc/modes_bloc.dart';
+import '../../../bloc/middle_area_bloc/middle_area_bloc.dart';
+import '../../Amrap_Clock_Text.dart';
+import 'Amrap_rounds.dart';
 
 
 class Amrap_paused_display extends StatelessWidget {
   Amrap_paused_display({super.key, required this.state});
-
   AMRAPState state;
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,69 @@ class Amrap_paused_display extends StatelessWidget {
                         icon: FaIcon(FontAwesomeIcons.x, size: 20, color: Colors.red,),
                         onPressed: () {
 
-                          BlocProvider.of<AMRAPBloc>(context).add(AmrapClose());
-                          BlocProvider.of<WorkoutModesBloc>(context)
-                              .add(SelectWorkout(
-                              status: WorkoutStatus.initial));
+                          /// Before Alert Dialog
+                          // BlocProvider.of<AMRAPBloc>(context).add(AmrapClose());
+                          // BlocProvider.of<WorkoutModesBloc>(context)
+                          //     .add(SelectWorkout(
+                          //     status: WorkoutStatus.initial));
 
+                          /// Alert Dialog
+                          showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: Center(
+                                  child: Text('Finish AMRAP Workout?', style: GoogleFonts.bebasNeue(
+                                    fontSize: 30,
+                                    color: Colors.black,
+                                  ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                content: Text('Notes will not be deleted if you decide to finish workout',
+                                  style: GoogleFonts.bebasNeue(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                                    child: Text('Cancel', style: GoogleFonts.bebasNeue(
+                                      fontSize: 25,
+                                      color: Colors.black,
+                                    ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+
+                                      // BlocProvider.of<AMRAPBloc>(context).add(AmrapClose());
+                                      // /// Removes the Middle Area Amrap Horizontal Scroll View
+                                      // BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Invisible, widgetIndex: -1));
+                                      // /// Removes the Middle Area Amrap Horizontal Scroll View
+                                      // BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.initial));
+                                      // Navigator.pop(context, 'OK');
+
+                                      BlocProvider.of<AMRAPBloc>(context).add(AmrapClose());
+                                      /// Remove ?
+                                      //state.copyWith(status: AMRAP_Status.initial);
+                                      BlocProvider.of<AMRAPBloc>(context).state.copyWith(rounds: 0);
+                                      /// Removes the Middle Area Amrap Horizontal Scroll View
+                                      BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Invisible, widgetIndex: -1));
+                                      /// Removes the Middle Area Amrap Horizontal Scroll View
+                                      BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.initial));
+                                      Navigator.pop(context, 'OK');
+
+                                    },
+                                    child: Text('OK', style: GoogleFonts.bebasNeue(
+                                      fontSize: 25,
+                                      color: Colors.black,
+                                    ),
+                                    ),
+                                  ),
+                                ],
+                              ));
 
                         }
                     ),
@@ -48,11 +108,12 @@ class Amrap_paused_display extends StatelessWidget {
                   Container(
                     width: 200,
                     height: 200,
-                    child: const CircularCappedProgressIndicator(
+                    child: CircularCappedProgressIndicator(
                       backgroundColor: Colors.white54,
+                      color: Colors.green,
                       strokeWidth: 5.0,
                       strokeCap: StrokeCap.round,
-                      value: 0,
+                      value: state.duration / AMRAPBloc.totalDuration,
                     ),
 
                   ),
@@ -81,29 +142,7 @@ class Amrap_paused_display extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.remove,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<AMRAPBloc>(context).subtractRound();
-                      print('Minus Round : ${AMRAPBloc.roundCount}');
-                    },
-                  ),
-                  Text('Data', style: TextStyle(fontSize: 25, color: Colors.green),),
-                  IconButton(
-                    icon: Icon(
-                      Icons.add,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      BlocProvider.of<AMRAPBloc>(context).addRound();
-                      print('Add Round : ${AMRAPBloc.roundCount}');
-                    },
-                  ),
+                  AmrapRoundsDisplay(),
                 ],
               ),
             ),

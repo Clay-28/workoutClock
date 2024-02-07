@@ -27,6 +27,11 @@ class TimerState extends Equatable {
     );
   }
 
+  int get state_duration => duration;
+
+  int fetchDuration(){
+    return duration;
+  }
 
   @override
   List<Object> get props => [duration, restTime, status];

@@ -3,14 +3,12 @@ part of 'scroll_wheel_bloc.dart';
 
 
 abstract class ScrollWheelState extends Equatable {
-
   @override
   List<Object> get props => [];
 }
 
 final class ScrollWheelInitial extends ScrollWheelState{
  ScrollWheelInitial({required this.minSelected, required this.secondSelected});
-
  final int minSelected;
  final int secondSelected;
 

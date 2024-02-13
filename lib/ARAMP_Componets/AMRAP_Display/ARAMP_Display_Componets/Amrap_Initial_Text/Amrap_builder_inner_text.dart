@@ -57,7 +57,7 @@ class AmrapInitalText extends StatelessWidget {
                    /// BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Invisible));
                   },
                   child: Text('Start', style: GoogleFonts.bebasNeue(
-                    fontSize: 30,
+                    fontSize: 25,
                     color: Colors.white,
                   )),)
               ],

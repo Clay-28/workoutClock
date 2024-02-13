@@ -1,5 +1,8 @@
 
+import 'dart:ffi';
+
 import 'package:WorkoutClock/ARAMP_Componets/AMRAP_model.dart';
+import 'package:WorkoutClock/bloc/Amrap_Emom_Tabata_Bloc/Emom_Bloc/Emom_main_bloc.dart';
 import 'package:WorkoutClock/bloc/scroll_wheel_bloc/scroll_wheel_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:slide_action/slide_action.dart';
 
 import '../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 import '../bloc/Amrap_Emom_Tabata_Bloc/Modes_Bloc/modes_bloc.dart';
+import '../bloc/Amrap_Emom_Tabata_Bloc/Tabata_Bloc/Tabata_bloc.dart';
 import '../bloc/clock_bloc/clock_bloc.dart';
 import '../bloc/middle_area_bloc/middle_area_bloc.dart';
 import '../bloc/note_bloc/note_bloc.dart';
@@ -96,11 +100,25 @@ class SlideToFinish extends StatelessWidget {
                 /// Updates Center Blue Dot
                 const QuotesClockWorkouts().setCurrentPosition(index: 1);
 
+
+
+                /// Emom Notes
+                String EmomModelNotes = BlocProvider.of<EmomBloc>(context).fetchEmomWorkoutData();
+                //print('\n\nEmomModelsNotes: $EmomModelNotes');
+
+                /// Tabata Notes
+                String TabataWorkoutNotes = BlocProvider.of<TabataBloc>(context).fetchTabataWorkoutData();
+                print(TabataWorkoutNotes);
+
+
                 /// Adds Workout Notes to hive
                 String AmrapTotalNotes = BlocProvider.of<AMRAPBloc>(context).fetchTotalAmrapData();
                 String notesWorkoutMinutes = calculateWorkoutMinutes(workoutMinutes);
-                String notes = 'Workout Time: $workoutHours:$notesWorkoutMinutes\n${BlocProvider.of<NoteBloc>(context).state.controller.text}'
-                    '\n\n\n$AmrapTotalNotes';
+                String notes = 'Workout Time: $workoutHours:$notesWorkoutMinutes\n${BlocProvider.of<NoteBloc>(context).state.controller.text}\n'
+                    '${AmrapTotalNotes != '' ? AmrapTotalNotes : ''}\n'
+                    '${EmomModelNotes != '' ? EmomModelNotes : ''}\n'
+                    '${TabataWorkoutNotes != '' ? TabataWorkoutNotes : ''}';
+
                 BlocProvider.of<NoteBloc>(context).userData.addWorkoutNote(notes, workoutTime);
 
                 /// Resets Timer Bloc
@@ -120,6 +138,13 @@ class SlideToFinish extends StatelessWidget {
                 /// Sets Amrap, Emom, Tatbata Display
                 BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.initial));
 
+                /// Reset Emom
+                /// By setting full Reset to true, All Previous EmomWorkoutNotes are delete
+                BlocProvider.of<EmomBloc>(context).add(EmomReset(fullReset: true));
+
+                /// Resets Tabata
+                /// Deletes the previous tabataWorkouts
+                BlocProvider.of<TabataBloc>(context).add(TabataReset(fullReset: true));
 
                 await Future.delayed(
                   const Duration(seconds: 1),

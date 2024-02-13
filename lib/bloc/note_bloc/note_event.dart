@@ -18,10 +18,12 @@ class CloseNote extends NoteEvent{
 }
 
 class UpdateNotes extends NoteEvent{
-  final String text;
+  final String? text;
   bool? finished;
   int? duration;
-  UpdateNotes({required this.text, this.finished, this.duration});
+  bool? locked;
+
+  UpdateNotes({ this.text, this.finished, this.duration, this.locked});
 }
 
 class AddWorkout extends NoteEvent{

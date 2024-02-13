@@ -1,6 +1,7 @@
 import 'package:WorkoutClock/EMOM/Emom_Model/Emom_Model_and_Emom_Workouts.dart';
 import 'package:WorkoutClock/bloc/Amrap_Emom_Tabata_Bloc/Emom_Bloc/Emom_main_bloc.dart';
 import 'package:WorkoutClock/bloc/middle_area_bloc/middle_area_bloc.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -57,10 +58,24 @@ class _EmomWorkoutCardState extends State<EmomWorkoutCard> {
             print(widget.index);
           });
           BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Emom, emomWorkoutIndex: widget.index,));
+          // BlocProvider.of<EmomBloc>(context).add(EmomUpdate(
+          //   emomStatus: EmomStatus.setup,
+          //   everyScrollWheelIndex: everyScrollWheelIndex,
+          //   forScrollWheelIndex: forScrollWheelIndex,
+         // ));
+          /// Changes Emom state to custom and sets the for and every scroll text to original
           BlocProvider.of<EmomBloc>(context).add(EmomUpdate(
-            emomStatus: EmomStatus.setup,
-            everyScrollWheelIndex: everyScrollWheelIndex,
-            forScrollWheelIndex: forScrollWheelIndex,
+            /// Original
+            //emomStatus: EmomStatus.setup,
+            /// Testing EmomStatus Change
+            //emomStatus: EmomStatus.selectingWorkout,
+            /// ToDo: Change to emomStatus to Custom and set forScrollWheel Text and scrollWheelText to Original
+            emomStatus: EmomStatus.helper,
+            description: 'reset',
+            emomModel: EmomModel(interval: 60, totalDuration: 10 * 60, description: '', rounds: 0),
+            everyScrollWheelIndex: 3,
+            everyController: FixedExtentScrollController(initialItem: 3),
+            forScrollWheelIndex: 9,
           ));
 
 
@@ -129,7 +144,7 @@ class _EmomWorkoutCardState extends State<EmomWorkoutCard> {
         });
         BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Emom, emomWorkoutIndex: widget.index,));
         BlocProvider.of<EmomBloc>(context).add(EmomUpdate(
-          interval: 60,
+          interval: widget.emomModel.interval,
           totalDuration: widget.emomModel.totalDuration,
           /// Original
           //emomStatus: EmomStatus.setup,
@@ -138,11 +153,6 @@ class _EmomWorkoutCardState extends State<EmomWorkoutCard> {
           /// Testing Helper Function
           emomStatus: EmomStatus.helper,
           emomModel: widget.emomModel,
-          forScrollWheelIndex: (widget.emomModel.totalDuration! ~/60) - 1,
-          //everyScrollWheelIndex: 0,
-          //forScrollWheelIndex: widget.emomModel.totalDuration! ~/60,
-          // everyScrollWheelIndex: everyScrollWheelIndex,
-          // forScrollWheelIndex: forScrollWheelIndex,
         ));
 
         },
@@ -159,43 +169,38 @@ class _EmomWorkoutCardState extends State<EmomWorkoutCard> {
             ),
             borderRadius: BorderRadius.all(Radius.circular(10))
         ),
-        child: Stack(
-          alignment: Alignment.center,
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Text(
-                    'EMOM Workout\n${widget.emomModel.totalDuration!~/60} Minutes',
-                    style: GoogleFonts.bebasNeue(
-                        fontSize: 30,
-                        color: Colors.white,
-                        textStyle: TextStyle(
-                          height: 1.25,
-                          overflow: TextOverflow.visible,
-                        )
-                    ),
-                    textAlign: TextAlign.center,
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Center(
+                child: Text(
+                  'EMOM Workout\n${widget.emomModel.totalDuration!~/60} Minutes',
+                  style: GoogleFonts.bebasNeue(
+                      fontSize: 30,
+                      color: Colors.white,
+                      textStyle: TextStyle(
+                        height: 1.25,
+                        overflow: TextOverflow.visible,
+                      )
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      emomDescription,
-                      style: GoogleFonts.bebasNeue(
-                        fontSize: 21,
-                        color: Colors.white,
-                      ),
-                      //textAlign: TextAlign.center,
-                    ),
-                  ),
+              ),
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AutoSizeText( emomDescription,
+                  minFontSize: 15,
+                  style: GoogleFonts.bebasNeue(
+                      fontSize: 35,
+                      color: Colors.white),
                 ),
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),

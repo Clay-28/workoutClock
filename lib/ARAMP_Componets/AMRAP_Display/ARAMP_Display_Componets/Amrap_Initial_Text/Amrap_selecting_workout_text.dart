@@ -65,17 +65,21 @@ class Amrap_Selecting_Workout_Text extends StatelessWidget {
                   //int duration = state.duration;
 
                   /// Adds a Amrap Details to notes
-                  AmrapModel newAmrapWorkout = AmrapModel(duration: duration * 60, rounds: 0, description: '${amrapModel?.description}\n\nNotes:' );
+                  AmrapModel newAmrapWorkout = AmrapModel(duration: duration * 60, rounds: 0, description: '${amrapModel?.description}' );
+
                   /// Original & Works
                   //BlocProvider.of<AMRAPBloc>(context).add(CreateAmrapModel(duration: duration * 60, rounds: 0, description: amrapModel?.description));
-                  BlocProvider.of<AMRAPBloc>(context).add(CreateAmrapModel(duration: duration * 60, rounds: 0, description: '${amrapModel?.description}\n\nNotes:' ));
+                  BlocProvider.of<AMRAPBloc>(context).add(CreateAmrapModel(duration: duration * 60, rounds: 0, description: '${amrapModel?.description}' ));
 
 
-                  BlocProvider.of<NoteBloc>(context).add(AddWorkout(ArmapWorkout: newAmrapWorkout,));
+                  /// Depreciated Function
+                  /// -> By adding a notes section in the middle area eliminated the need to add a workout
+                  /// -> In in the bottom sheet viewer
+                  //BlocProvider.of<NoteBloc>(context).add(AddWorkout(ArmapWorkout: newAmrapWorkout,));
 
-                  /// Test
+
                   //BlocProvider.of<AMRAPBloc>(context).add(CreateAmrapModel(duration: duration * 60, rounds: 0, description: '${amrapModel?.description}\n\nNotes:'));
-                  BlocProvider.of<AMRAPBloc>(context).add(AmrapUpdate(duration: duration, status: AMRAP_Status.paused, amrapModel: AmrapModel(duration: duration, rounds: 0, description: '${amrapModel?.description}\n\nNotes:')));
+                  BlocProvider.of<AMRAPBloc>(context).add(AmrapUpdate(duration: duration, status: AMRAP_Status.paused, amrapModel: AmrapModel(duration: duration, rounds: 0, description: '${amrapModel?.description}')));
 
 
 

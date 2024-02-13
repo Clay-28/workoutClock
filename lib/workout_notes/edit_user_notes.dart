@@ -28,28 +28,7 @@ class _BottomSheetWorkoutNotesEditorState extends State<BottomSheetWorkoutNotesE
     // TODO: implement initState
     super.initState();
 
-    // scrollController = ScrollController(initialScrollOffset: 0.0);
-    // print('init State offset: ${scrollController.offset}');
-    // // setState(() {
-    // //  scrollController = ScrollController(initialScrollOffset: 0.0);
-    // // });
-
-    //scrollController.jumpTo(0.0);
-
   }
-
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   scrollController = ScrollController(initialScrollOffset: 0.0);
-  // }
-  //
-  // late ScrollController scrollController;
-
-
-  //ScrollController scrollController = ScrollController(initialScrollOffset: offSet);
 
 
 
@@ -65,12 +44,6 @@ class _BottomSheetWorkoutNotesEditorState extends State<BottomSheetWorkoutNotesE
     });
     TextEditingController controller = TextEditingController(text: widget.workoutNote.workoutNotes);
     controller.selection.end;
-    //
-    // double _position = 0.0;
-    //
-    // scrollController.addListener(() {
-    //   print(scrollController.offset);
-    // });
 
 
 

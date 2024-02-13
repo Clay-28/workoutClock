@@ -56,7 +56,7 @@ class AMRAPBloc extends Bloc<AMRAPEvent, AMRAPState> {
     String AmrapData = '';
     if(AmrapsList.length >= 1) {
       for (AmrapModel item in AmrapsList) {
-        AmrapData += 'Amrap\n${item.duration} Minutes, ${item.rounds} Rounds\n${item.description ?? 'Custom'}\n\n';
+        AmrapData += '**Amrap**\n${item.duration} Minutes, ${item.rounds} Rounds\n${item.description ?? 'Custom'}\n\n';
       }
       return '**AMRAP Review**\n${AmrapData}';
     }
@@ -99,7 +99,7 @@ class AMRAPBloc extends Bloc<AMRAPEvent, AMRAPState> {
       emit(state.copyWith(status: AMRAP_Status.helper, duration: event.duration, amrapModel: event.amrapModel, ));
       Future.delayed(const Duration(milliseconds: 100), (){
         ///
-        add(AmrapUpdate(duration: event.duration! ~/60, amrapModel: event.amrapModel, status: AMRAP_Status.selectingWorkout));
+        add(AmrapUpdate(duration: event.duration!, amrapModel: event.amrapModel, status: AMRAP_Status.selectingWorkout));
       });
     }
 
@@ -119,7 +119,9 @@ class AMRAPBloc extends Bloc<AMRAPEvent, AMRAPState> {
 
   void _onAmrapCountDown(AmrapCountDown event, Emitter<AMRAPState> emit){
 
-    emit(state.copyWith(duration: event.duration, status: AMRAP_Status.inProgress));
+    if(state.duration >=0){
+      emit(state.copyWith(duration: event.duration, status: AMRAP_Status.inProgress));
+    }
     print('state.duration: ${state.duration}');
     print('total duration: $totalDuration');
 
@@ -131,19 +133,24 @@ class AMRAPBloc extends Bloc<AMRAPEvent, AMRAPState> {
       AmrapAudioPlayer.play();
     }
 
+    // if(state.duration == 0){
+    //   print('Amrap Finished');
+    //   emit(state.copyWith(status: AMRAP_Status.finished));
+    // }
+
     if(state.duration < 0) {
+      emit(state.copyWith(status: AMRAP_Status.finished));
       totalDuration = 10 * 60;
       _AmrapTicks?.cancel();
       AmrapAudioPlayer.stop();
       AmrapAudioPlayer = MyAudioHandler(false, 1);
       AmrapAudioPlayer.play();
-      emit(state.copyWith(status: AMRAP_Status.finished));
     }
   }
 
   void _onCreateAmrapModel(CreateAmrapModel event, Emitter<AMRAPState> emit){
     /// Used for end of workout summary
-    AmrapModel newAmrapWorkout = AmrapModel(duration: (event.duration ~/60) , rounds: event.rounds, description: event.description);
+    AmrapModel newAmrapWorkout = AmrapModel(duration: (event.duration) , rounds: event.rounds, description: event.description);
     AmrapsList.add(newAmrapWorkout);
     print('Create Amrap Model: ${AmrapsList.length}');
   }

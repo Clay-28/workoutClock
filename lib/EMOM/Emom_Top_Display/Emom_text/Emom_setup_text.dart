@@ -1,3 +1,4 @@
+import 'package:WorkoutClock/EMOM/Emom_Model/Emom_Model_and_Emom_Workouts.dart';
 import 'package:WorkoutClock/EMOM/Emom_Scroll_Wheel/Emom_Every_Scroll_Wheel.dart';
 import 'package:WorkoutClock/bloc/Amrap_Emom_Tabata_Bloc/Emom_Bloc/Emom_main_bloc.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,14 @@ class EmomInitialText extends StatelessWidget {
     String? everyText = BlocProvider.of<EmomBloc>(context).state.everyScrollText;
     print(everyText);
     String? forText = BlocProvider.of<EmomBloc>(context).state.forScrollText;
-
     int interval = BlocProvider.of<EmomBloc>(context).state.interval;
     int totalDuration = BlocProvider.of<EmomBloc>(context).state.totalDuration;
-    int rounds = (totalDuration ~/ interval);
+    //int rounds = (totalDuration == 0 ? 600 : totalDuration   ~/  interval == 0 ? 60 : interval  );
+    int rounds = totalDuration ~/ interval;
 
+    EmomModel emomModel = BlocProvider.of<EmomBloc>(context).state.emomModel;
+
+    EmomState emomState = BlocProvider.of<EmomBloc>(context).state;
 
 
     return Container(
@@ -77,14 +81,20 @@ class EmomInitialText extends StatelessWidget {
             ),
           ),
           TextButton(
-              onPressed: interval < totalDuration ? (){
-                /// Updates Emom state to Paused
-
-              } : ()=> null,
-              child: Text('Start', style: GoogleFonts.bebasNeue(
-                fontSize: 30,
-                color: interval < totalDuration ? Colors.white : Colors.black)
-              ),
+            onPressed: (){
+              /// Creates a EmomModel, Sets the Emom Display to Paused, And Hides the
+              BlocProvider.of<EmomBloc>(context).add(EmomUpdate(emomStatus: EmomStatus.paused));
+              /// Creates and adds an EmomModel in the state.emomWorkouts
+              BlocProvider.of<EmomBloc>(context).add(CreateEmomModel());
+            },
+              // onPressed: interval < totalDuration ? (){
+              //   /// Updates Emom state to Paused
+              //
+              // } : ()=> null,
+            child: Text('Start', style: GoogleFonts.bebasNeue(
+              fontSize: 30,
+              color: Colors.white)
+            ),
           )
         ],
       ),

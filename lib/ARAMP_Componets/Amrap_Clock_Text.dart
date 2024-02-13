@@ -1,3 +1,4 @@
+import 'package:WorkoutClock/bloc/middle_area_bloc/middle_area_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,9 @@ class Amrap_Clock_Text extends StatelessWidget {
               '10:00', style: TextStyle(fontSize: 40, color: Colors.white));
           }
           if (state.status == AMRAP_Status.inProgress) {
+            if(BlocProvider.of<AMRAPBloc>(context).state.duration == 0){
+              BlocProvider.of<MiddleAreaBloc>(context).add(MiddleAreaUpdateState(status: MiddleAreaStatus.Invisible));
+            }
             int duration = BlocProvider.of<AMRAPBloc>(context).state.duration;
             int textHour = (duration / 3600).floor();
             int textMin = ((duration / 60) % 60).floor();

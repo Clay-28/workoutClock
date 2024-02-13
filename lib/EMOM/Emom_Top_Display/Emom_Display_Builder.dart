@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../ARAMP_Componets/AMRAP_Display/ARAMP_Display_Componets/Amrap_initial_display.dart';
 import '../../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
+import 'Emom_Finished.dart';
+import 'Emom_Paused.dart';
 import 'Emom_Selecting_Workout.dart';
+import 'Emom_inProgress.dart';
 
 class EmomDisplayBuilder extends StatelessWidget {
   const EmomDisplayBuilder({super.key});
@@ -24,6 +27,12 @@ class EmomDisplayBuilder extends StatelessWidget {
         return EmomSelectingWorkout();
       }if(state.status == EmomStatus.helper){
         return EmomInitialDisplay();
+      }if(state.status == EmomStatus.paused){
+        return EmomPausedDisplay();
+      }if(state.status == EmomStatus.inProgress){
+        return EmomInProgressDisplay(state: state);
+      }if(state.status == EmomStatus.finished){
+        return EmomFinishedDisplay();
       }
 
       return const Text('Error Occurred, Please Refresh');

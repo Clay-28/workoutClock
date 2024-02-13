@@ -25,7 +25,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState>{
   WorkoutNotesServices userData = WorkoutNotesServices();
   static NoteStatus globalNoteStatus = NoteStatus.open;
 
-  NoteBloc(): super( RegisteringHiveState(controller: TextEditingController(text:'Workout Notes:\n',))){
+  NoteBloc(): super( RegisteringHiveState(
+      controller: TextEditingController(
+        text:'Workout Notes:\n',),
+    locked: false,
+  )){
     on<OpenNote>(_onOpenNotes);
     on<CloseNote>(_onCloseNotes);
     on<UpdateNotes>(_onUpdateNote);
@@ -37,7 +41,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState>{
 
   void _onOpenNotes(OpenNote event, Emitter<NoteState> emit){
     //state.copyWith(noteStatus: NoteStatus.open );
-    emit(NoteOpenState(notes: state.text!, controller: TextEditingController()));
+    emit(NoteOpenState(notes: state.text!, controller: TextEditingController(), locked: state.locked));
   }
 
   void _onCloseNotes(CloseNote event, Emitter<NoteState> emit){
@@ -46,7 +50,7 @@ class NoteBloc extends Bloc<NoteEvent, NoteState>{
 
   void _onUpdateNote(UpdateNotes event, Emitter<NoteState> emit){
     // state.controller.text = '${state.controller.text} \n${event.text}';
-    state.text = event.text;
+    state.text = event.text ?? state.text;
     // noteGlobalController.text = '${state.controller.text} \n${event.text}';
     // String totalAmrapNotes = '';
     // for(AmrapModel item in AmrapNotes) {
@@ -56,7 +60,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState>{
     //noteGlobalController = TextEditingController(text: '${state.text}\n\n$totalAmrapNotes');
     //emit(NoteMainState(controller: TextEditingController(text: '${state.text}\n\n$totalAmrapNotes')));
 
-    emit(NoteMainState(controller: TextEditingController(text: '${state.text}'), status: NoteStatus.open));
+    emit(NoteMainState(
+      controller: TextEditingController(text: '${state.text}'),
+      status:NoteStatus.open,
+      locked: event.locked ?? state.locked,)
+    );
 
     print('State.NoteStatus: ${state.noteStatus}');
   }
@@ -77,7 +85,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState>{
 
   void _onRegisterHive(RegisterHiveEvent event, Emitter<NoteState> emit) async {
     await userData.init();
-    emit(NoteMainState(controller: TextEditingController(text: 'Workout Notes:\n'), status: NoteStatus.open));
+    emit(NoteMainState(
+      controller: TextEditingController(text: 'Workout Notes:\n'),
+      status: NoteStatus.open,
+      locked: state.locked,
+    ));
   }
 
   void _onHideNotes(HideNotes event, Emitter<NoteState> emit){
@@ -85,7 +97,11 @@ class NoteBloc extends Bloc<NoteEvent, NoteState>{
     state.noteStatus = event.noteStatus;
     if(event.noteStatus == NoteStatus.open){
       state.copyWith(noteStatus: NoteStatus.open);
-      emit(NoteMainState(controller: TextEditingController(text: '${state.text}'), status: event.noteStatus));
+      emit(NoteMainState(
+        controller: TextEditingController(text: '${state.text}'),
+        status: event.noteStatus,
+        locked: state.locked
+      ));
       print('\n\n ');
     }else{
       emit(state.copyWith(noteStatus: event.noteStatus));

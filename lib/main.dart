@@ -1,3 +1,5 @@
+import 'package:WorkoutClock/bloc/Amrap_Emom_Tabata_Bloc/Tabata_Bloc/Tabata_bloc.dart';
+import 'package:WorkoutClock/bloc/Quotes_Clock_Workouts_Bloc/QuotesClockWorkoutBloc.dart';
 import 'package:WorkoutClock/bloc/middle_area_bloc/middle_area_bloc.dart';
 import 'package:WorkoutClock/screens/intro_screen.dart';
 import 'package:WorkoutClock/services/workout_note_services.dart';
@@ -50,7 +52,11 @@ Future<void> main() async {
               create: (BuildContext context)=> MiddleAreaBloc(),
             ),
             BlocProvider<EmomBloc>(
-                create: (BuildContext context)=> EmomBloc())
+                create: (BuildContext context)=> EmomBloc()),
+            BlocProvider<TabataBloc>
+              (create: (BuildContext context)=> TabataBloc()),
+            BlocProvider<QCWBloc>
+              (create: (BuildContext context)=> QCWBloc()),
           ],
           child : WorkoutApp()
       ));

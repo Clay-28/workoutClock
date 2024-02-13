@@ -62,7 +62,7 @@ class EmomInitialDisplay extends StatelessWidget {
                                 onPressed: () {
 
                                   /// Reset Emom Bloc Back to original State
-                                  BlocProvider.of<EmomBloc>(context).add(EmomReset());
+                                  BlocProvider.of<EmomBloc>(context).add(EmomReset(fullReset: false));
                                   BlocProvider.of<WorkoutModesBloc>(context).add(SelectWorkout(status: WorkoutStatus.initial));
                                   BlocProvider.of<MiddleAreaBloc>(context).add(ResetMiddleArea(status: MiddleAreaStatus.Invisible,));
                                   Navigator.pop(context, 'OK');

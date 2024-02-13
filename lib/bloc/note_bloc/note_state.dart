@@ -17,13 +17,19 @@ part of 'note_bloc.dart';
 enum NoteStatus {hidden, open}
 
 class NoteState extends Equatable {
-  NoteState({this.text = 'Workout Notes:', required this.controller , this.noteStatus = NoteStatus.open});
+  NoteState({
+  this.text = 'Workout Notes:',
+  required this.controller ,
+  this.noteStatus = NoteStatus.open,
+  required this.locked,
+  });
 
   //String title = 'Notes';
   NoteStatus? noteStatus;
   String text;
   TextEditingController controller =  TextEditingController(
   text: 'Workout Notes:\n');
+  bool locked;
 
   @override
   List<Object?> get props => [text];
@@ -31,12 +37,15 @@ class NoteState extends Equatable {
   NoteState copyWith({
     String? text,
     TextEditingController ? controller,
-    NoteStatus ? noteStatus
+    NoteStatus ? noteStatus,
+    bool? locked,
   }){
     return NoteState(
       text: text ?? this.text,
       controller: controller ?? this.controller,
-      noteStatus: noteStatus ?? this.noteStatus
+      noteStatus: noteStatus ?? this.noteStatus,
+      locked: locked ?? this.locked
+
     );
   }
 
@@ -44,19 +53,33 @@ class NoteState extends Equatable {
 
 class NoteMainState extends NoteState{
   NoteStatus status;
-  NoteMainState({required super.controller, required this.status});
+  NoteMainState({
+    required super.controller,
+    required this.status,
+    required super.locked
+  });
 }
 
 class NoteOpenState extends NoteState{
   String notes;
-  NoteOpenState({required this.notes, required super.controller});
+  NoteOpenState({
+    required this.notes,
+    required super.controller,
+    required super.locked
+  });
 }
 
 class RegisteringHiveState extends NoteState{
-  RegisteringHiveState({required super.controller});
+  RegisteringHiveState({
+    required super.controller,
+    required super.locked,
+  });
 }
 
 class HiddenNotes extends NoteState{
-  HiddenNotes({required super.controller});
+  HiddenNotes({
+    required super.controller,
+    required super.locked
+  });
 }
 

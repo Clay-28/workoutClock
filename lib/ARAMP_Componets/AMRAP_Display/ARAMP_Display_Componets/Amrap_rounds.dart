@@ -41,7 +41,7 @@ class AmrapRoundsDisplay extends StatelessWidget {
             ],
           );
         }
-        if(state.status == AMRAP_Status.inProgress){
+        if(state.status == AMRAP_Status.inProgress || state.status == AMRAP_Status.finished){
           return Row(
             children: [
               IconButton(

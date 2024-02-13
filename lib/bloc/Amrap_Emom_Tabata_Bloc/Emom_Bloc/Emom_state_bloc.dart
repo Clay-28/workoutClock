@@ -4,7 +4,7 @@ part of 'Emom_main_bloc.dart';
 /// The purpose of the helper function is to rebuild the
 /// Horizontal Scroll to update the FixedExtentScrollController
 /// Logic -> Create a copy, Update the
-enum EmomStatus {setup, paused, inProgressed, selectingWorkout, helper}
+enum EmomStatus {setup, paused, inProgress, selectingWorkout, helper, finished}
 
 class EmomState {
   int totalDuration;
@@ -13,11 +13,13 @@ class EmomState {
   EmomStatus status;
   int? forScrollWheelIndex;
   int? everyScrollWheelIndex;
+  int? rounds;
   String? forScrollText;
   String? everyScrollText;
   EmomModel emomModel;
   FixedExtentScrollController everyController;
   FixedExtentScrollController forController;
+  //List<EmomModel>? emomWorkouts;
 
 
   EmomState({
@@ -32,6 +34,8 @@ class EmomState {
     this.everyScrollWheelIndex,
     this.everyScrollText,
     this.forScrollText,
+    //this.emomWorkouts,
+    this.rounds,
   });
 
   EmomState copyWith({
@@ -46,6 +50,8 @@ class EmomState {
     EmomModel? emomModel,
     FixedExtentScrollController? forController,
     FixedExtentScrollController? everyController,
+    List<EmomModel>? emomWorkouts,
+    int? rounds,
   }){
     return EmomState(
       interval: interval ?? this.interval,
@@ -59,7 +65,8 @@ class EmomState {
       emomModel: emomModel ?? this.emomModel,
       forController: forController ?? this.forController,
       everyController: everyController ?? this.everyController,
-
+      //emomWorkouts: emomWorkouts ?? this.emomWorkouts,
+      rounds: rounds ?? this.rounds,
     );
   }
 

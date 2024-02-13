@@ -16,6 +16,7 @@ class EmomEveryScrollWheel extends StatelessWidget {
 
     FixedExtentScrollController everyController = BlocProvider.of<EmomBloc>(context).state.everyController;
 
+
     return Container(
         height: MediaQuery
             .of(context)
@@ -63,15 +64,15 @@ class EmomEveryScrollWheel extends StatelessWidget {
                         //diameterRatio: 2,
                         onSelectedItemChanged: (value) {
                           BlocProvider.of<EmomBloc>(context).add(EmomUpdate(
-                              everyScrollWheelIndex: value +1,),
+                              everyScrollWheelIndex: value ),
                           );
                         },
                         children: List.generate(20, (index) =>
                             RotatedBox(
                                 quarterTurns: 1,
                                 child:
-                                EmomScrollWheelText(minutes: index + 1))),
-                                //EmomScrollWheelText(minutes: index ))),
+                                //EmomScrollWheelText(minutes: index + 1))),
+                                EmomScrollWheelText(minutes: index ))),
                         // childDelegate: ListWheelChildBuilderDelegate(
                         //     childCount: 60,
                         //     builder: (context, index) {

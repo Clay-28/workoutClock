@@ -120,7 +120,7 @@ class Amrap_inProgress_Display extends StatelessWidget {
                             color: Colors.green,
                             strokeWidth: 5.0,
                             strokeCap: StrokeCap.round,
-                            value: value + 0,
+                            value: state.duration == 0 ? 1 : value + 0,
                           ),
                         ),
                         //const ClockTimeDisplay(),

@@ -5,6 +5,7 @@ import '../Clock_scroll_wheel/break_time_ui.dart';
 import '../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 import 'middle_Amrap_widget.dart';
 import 'middle_Emom_widget.dart';
+import 'middle_Tabata_widget.dart';
 
 
 class MiddleAreaBuilder extends StatelessWidget {
@@ -26,8 +27,12 @@ class MiddleAreaBuilder extends StatelessWidget {
         }
         if(state.status == MiddleAreaStatus.Invisible){
           return Container(height: 220);
-        }if(AMRAPBloc.Amrap_status == AMRAP_Status.finished){
+        }
+        if(AMRAPBloc.Amrap_status == AMRAP_Status.finished){
           return Container(height: 220);
+        }
+        if(state.status == MiddleAreaStatus.Tabata){
+          return TabataMiddleAreaBuilder();
         }
         return Center(child: Text(state.status.toString(), style: TextStyle(fontSize: 20, color: Colors.white),),);
     });

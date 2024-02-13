@@ -149,8 +149,6 @@ class MiddleAmrapWidget extends StatelessWidget {
                           BlocProvider.of<AMRAPBloc>(context).add(UpdateAmrapDescription(description: controller.text));
                           Navigator.of(context).pop();
 
-                          /// How many Amrap Classes are in AmrapList
-                          print('Amrap List Count: ${AMRAPBloc.AmrapsList.length}');
                         },
                         child: Text( 'Update Notes',
                           style: GoogleFonts.bebasNeue(

@@ -1,4 +1,6 @@
 
+import 'package:WorkoutClock/bloc/Quotes_Clock_Workouts_Bloc/QuotesClockWorkoutBloc.dart';
+import 'package:WorkoutClock/models/Quotes_Clock_Workouts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,8 +16,17 @@ String day = DateTime.now().day.toString();
 String month = Month().fetchMonth(DateTime.now().month);
 String year = DateTime.now().year.toString();
 
-class WorkoutNotes extends StatelessWidget {
+class WorkoutNotes extends StatefulWidget {
   WorkoutNotes({super.key});
+
+  @override
+  State<WorkoutNotes> createState() => _WorkoutNotesState();
+}
+
+class _WorkoutNotesState extends State<WorkoutNotes> {
+
+  bool locked = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NoteBloc, NoteState>(builder: (context, state){
@@ -28,15 +39,24 @@ class WorkoutNotes extends StatelessWidget {
                       animationDuration: const Duration(seconds: 0),
                       splashColor: Colors.black,
                       onPressed: (){
+                        setState(() {
+                          locked = !locked;
+                          BlocProvider.of<QCWBloc>(context).add(UpdateQCW(locked: locked));
+                        });
                       },
-                      child: const Text('\n',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 23,
+                      child: Container(
+                        height: 66,
+                        child: locked ? Icon(
+                          Icons.lock_outline,
+                          size: 30,
+                          color: Colors.white,
+                        ) : Icon(
+                          Icons.lock_open_outlined,
+                          size: 30,
+                          color: Colors.white,
                         ),
+                      )
                       )),
-                )
             );
           }
 

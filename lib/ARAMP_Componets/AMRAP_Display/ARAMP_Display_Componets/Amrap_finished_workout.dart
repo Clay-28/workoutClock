@@ -7,13 +7,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../bloc/Amrap_Emom_Tabata_Bloc/ARAMP_Bloc/AMRAP_bloc.dart';
 import '../../../bloc/Amrap_Emom_Tabata_Bloc/Modes_Bloc/modes_bloc.dart';
 import '../../../models/confetti.dart';
+import '../../AMRAP_model.dart';
 import '../../Amrap_Clock_Text.dart';
+import 'Amrap_rounds.dart';
 
 
 class Amrap_finished_display extends StatefulWidget {
   Amrap_finished_display({super.key, required this.state});
   AMRAPState state;
-
 
 
 
@@ -31,8 +32,8 @@ class _Amrap_finished_displayState extends State<Amrap_finished_display> {
     ChangeDisplay();
   }
 
-  ChangeDisplay(){
-    Future.delayed(Duration(seconds: 1), (){
+  void ChangeDisplay(){
+    Future.delayed(Duration(milliseconds: 100), (){
       setState(() {
         height_1 = MediaQuery.of(context).size.height * 0.32;
         width_1 = MediaQuery.of(context).size.width * 0.85;
@@ -52,10 +53,10 @@ class _Amrap_finished_displayState extends State<Amrap_finished_display> {
   Widget visibleWidget = Amrap_Completed();
   double height_1 = 230;
   double width_1 = 230;
-  double height_2 = 200;
-  double width_2 = 200;
+  double height_2 = 205;
+  double width_2 = 205;
   double borderRadius_1 = 240 /2;
-  double borderRadius_2 = 200 /2;
+  double borderRadius_2 = 205 /2;
 
   //Widget secondaryWidget = SquareDetails();
 
@@ -81,7 +82,7 @@ class _Amrap_finished_displayState extends State<Amrap_finished_display> {
             ),
             border: Border.all(
               color: Colors.green,
-              width: 3,
+              width: 2,
             )
           ),
         ),
@@ -118,11 +119,56 @@ class _Amrap_finished_displayState extends State<Amrap_finished_display> {
             ],
           ),
         ),
-        
       ],
     ),
     ),
-      ],
+        AnimatedOpacity(
+          opacity: invisible ? 1 : 0,
+          duration: const Duration(seconds: 1),
+          child: Stack(
+            children: [
+              Container(
+                height : 87,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AmrapRoundsDisplay(),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Stack(
+                      alignment: Alignment.center,
+                      children:[
+                        Container(
+                          width: 87,
+                          height: 87,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(width: 2, color: Colors.red, style: BorderStyle.solid)
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            fixedSize: const Size(75, 75),
+                            shape: const CircleBorder(),
+                          ),
+                          onPressed: () {
+                            null;
+                          },
+                          child: Center(child: Text(
+                            'Stop', style: TextStyle(color: Colors.white),)),
+                        ),
+                      ]),
+                ),
+              ),
+            ],
+          ),
+        )]
     );
   }
 }
@@ -181,7 +227,7 @@ class Amrap_Completed_Text extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: (){
-                        BlocProvider.of<AMRAPBloc>(context).add(AmrapUpdate(duration: 0, status: AMRAP_Status.initial));
+                        BlocProvider.of<AMRAPBloc>(context).add(AmrapUpdate(duration: 0, status: AMRAP_Status.initial, amrapModel: AmrapModel(duration: 10, rounds: 0, description: '') ));
                       },
                       child: Text('Restart', style: TextStyle(fontSize: 25, color: Colors.green),)
                   )
@@ -200,6 +246,7 @@ class Amrap_Completed_Text extends StatelessWidget {
 
 
 
+/*
 
 class SquareDetails extends StatelessWidget {
   SquareDetails({super.key});
@@ -316,7 +363,7 @@ class SquareDetails extends StatelessWidget {
     });
   }
 }
-
+*/
 
 class Amrap_Completed extends StatelessWidget {
   Amrap_Completed({super.key});

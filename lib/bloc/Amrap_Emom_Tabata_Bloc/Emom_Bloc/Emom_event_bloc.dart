@@ -5,8 +5,8 @@ class EmomEvent{
 }
 
 class EmomStart extends EmomEvent{
-  int duration;
-  EmomStart({required this.duration});
+  int? duration;
+  EmomStart({this.duration});
 }
 
 class EmomPaused extends EmomEvent{
@@ -37,5 +37,34 @@ class EmomUpdate extends EmomEvent{
 }
 
 class EmomReset extends EmomEvent{
-  EmomReset();
+  bool fullReset;
+  EmomReset({required this.fullReset});
+}
+
+class CreateEmomModel extends EmomEvent{
+  String? description;
+  int? totalDuration;
+  int? interval;
+  int? rounds;
+  CreateEmomModel({
+    this.description,
+    this.interval,
+    this.totalDuration,
+    this.rounds});
+
+}
+
+class EmomTicked extends EmomEvent{
+  EmomTicked({ required this.duration,});
+  final int duration;
+}
+
+class EmomDurationTicked extends EmomEvent{
+  EmomDurationTicked({ required this.totalDuration});
+  final int totalDuration;
+}
+
+class EmomDurationStart extends EmomEvent{
+  EmomDurationStart({this.totalDuration});
+  int? totalDuration;
 }

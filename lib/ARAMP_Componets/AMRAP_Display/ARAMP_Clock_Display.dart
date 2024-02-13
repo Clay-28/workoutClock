@@ -48,6 +48,7 @@ class ARAMPClock extends StatelessWidget {
           return Amrap_paused_display(state: state);
         }
         if(state.status == AMRAP_Status.finished){
+          print('finished');
           return Amrap_finished_display(state: state);
         }
         return const Text('Error Occurred, Please Refresh');
